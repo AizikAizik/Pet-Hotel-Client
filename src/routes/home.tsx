@@ -1,7 +1,14 @@
+import { Container, createStyles } from "@mantine/core";
 import React from "react";
 import PageHeader from "../components/layout/PageHeader";
 
+const useStyles = createStyles((theme) => ({
+  main: {
+    backgroundColor: "#FFF2BD",
+  },
+}));
 export default function Home() {
+  const { classes } = useStyles();
   const linkData = [
     {
       link: "/",
@@ -23,6 +30,9 @@ export default function Home() {
   return (
     <>
       <PageHeader links={linkData} />
+      <main className={classes.main}>
+        <Container></Container>
+      </main>
     </>
   );
 }
