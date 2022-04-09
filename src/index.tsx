@@ -13,6 +13,7 @@ ReactDOM.render(
         <Route path="/" element={<App />}>
           <Route index element={<Home />} />
           <Route path="/auth" element={<></>} />
+          <Route path="*" element={<h1>404- Url Not Found</h1>} />
         </Route>
       </Routes>
     </BrowserRouter>
