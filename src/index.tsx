@@ -12,8 +12,8 @@ ReactDOM.render(
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<Home />} />
+          <Route path="/auth" element={<></>} />
         </Route>
-        <Route path="/auth" element={<></>} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,
