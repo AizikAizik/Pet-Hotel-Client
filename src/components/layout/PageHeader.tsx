@@ -116,7 +116,10 @@ export default function PageHeader({ links }: PageHeaderProps) {
     </a>
   ));
   return (
-    <Header height={HEADER_HEIGHT}>
+    <Header
+      sx={{ background: "#FFF2BD", border: "none" }}
+      height={HEADER_HEIGHT}
+    >
       <Container className={classes.header}>
         <Logo />
         <Group spacing={5} className={classes.links}>
