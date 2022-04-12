@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./routes/HomePage";
 import LoginPage from "./routes/LoginPage";
+import SignUpPage from "./routes/SignUpPage";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -14,6 +15,7 @@ ReactDOM.render(
         <Route path="/" element={<App />}>
           <Route index element={<Home />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
           <Route path="*" element={<h1>404- Url Not Found</h1>} />
         </Route>
       </Routes>
