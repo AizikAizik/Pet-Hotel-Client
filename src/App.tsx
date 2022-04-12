@@ -2,6 +2,7 @@ import { MantineProvider } from "@mantine/core";
 import { NotificationsProvider } from "@mantine/notifications";
 import React from "react";
 import { Outlet } from "react-router-dom";
+import Layout from "./components/layout/Layout";
 
 function App() {
   return (
@@ -15,7 +16,9 @@ function App() {
       }}
     >
       <NotificationsProvider>
-        <Outlet />
+        <Layout>
+          <Outlet />
+        </Layout>
       </NotificationsProvider>
     </MantineProvider>
   );

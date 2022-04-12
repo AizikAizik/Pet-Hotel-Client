@@ -4,7 +4,8 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./routes/home";
+import Home from "./routes/HomePage";
+import LoginPage from "./routes/LoginPage";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -12,7 +13,7 @@ ReactDOM.render(
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<Home />} />
-          <Route path="/auth" element={<></>} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="*" element={<h1>404- Url Not Found</h1>} />
         </Route>
       </Routes>

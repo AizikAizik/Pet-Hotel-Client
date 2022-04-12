@@ -9,6 +9,7 @@ import {
 } from "@mantine/core";
 import { useBooleanToggle } from "@mantine/hooks";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Logo } from "../shared/Logo";
 
 const HEADER_HEIGHT = 70;
@@ -56,14 +57,14 @@ const useStyles = createStyles((theme) => ({
   link: {
     display: "block",
     lineHeight: 1,
-    padding: "8px 12px",
+    padding: "12px 20px",
     borderRadius: theme.radius.sm,
     textDecoration: "none",
     color:
       theme.colorScheme === "dark"
         ? theme.colors.dark[0]
         : theme.colors.gray[7],
-    fontSize: theme.fontSizes.sm,
+    fontSize: theme.fontSizes.md,
     fontWeight: 500,
 
     "&:hover": {
@@ -81,12 +82,8 @@ const useStyles = createStyles((theme) => ({
 
   linkActive: {
     "&, &:hover": {
-      backgroundColor:
-        theme.colorScheme === "dark"
-          ? theme.fn.rgba(theme.colors[theme.primaryColor][9], 0.25)
-          : theme.colors[theme.primaryColor][0],
-      color:
-        theme.colors[theme.primaryColor][theme.colorScheme === "dark" ? 3 : 7],
+      backgroundColor: theme.colors.teal[6],
+      color: theme.colors.teal[0],
     },
   },
 }));
@@ -100,20 +97,19 @@ export default function PageHeader({ links }: PageHeaderProps) {
   const [active, setActive] = useState(links[0].link);
   const { classes, cx } = useStyles();
   const items = links.map((link) => (
-    <a
+    <Link
       key={link.label}
-      href={link.link}
+      to={link.link}
       className={cx(classes.link, {
         [classes.linkActive]: active === link.link,
       })}
-      onClick={(event) => {
-        event.preventDefault();
+      onClick={() => {
         setActive(link.link);
         toggleOpened(false);
       }}
     >
       {link.label}
-    </a>
+    </Link>
   ));
   return (
     <Header
