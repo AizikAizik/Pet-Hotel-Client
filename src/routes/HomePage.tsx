@@ -14,13 +14,11 @@ export default function Home() {
   return (
     <main className={classes.main}>
       <Container sx={{ paddingTop: "5rem" }}>
-        <Group position="center" sx={{ width: "100%" }}>
-          <Title order={1} sx={{ fontSize: "max(3rem, 2rem)" }}>
+        <Group position="center" direction={"column"} sx={{ width: "100%" }}>
+          <Title order={1} sx={{ fontSize: "clamp(2.2rem,4vw,3rem)" }}>
             We Take Care Of Your Loving Pets
           </Title>
-          <Text size="md" sx={{ fontSize: "1.5rem" }}>
-            Get the best the accommodation for your pets{" "}
-          </Text>
+          <Text size="xl">Get the best the accommodation for your pets </Text>
         </Group>
       </Container>
     </main>
