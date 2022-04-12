@@ -10,6 +10,7 @@ function App() {
         fontFamily: "Lato",
         headings: {
           fontFamily: "Neucha",
+          fontWeight: "400",
         },
       }}
     >
