@@ -11,6 +11,9 @@
 # production
 /build
 
+# Intellij folder
+/.idea
+
 # misc
 .DS_Store
 .env.local
