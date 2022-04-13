@@ -16,6 +16,7 @@ ReactDOM.render(
           <Route index element={<Home />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/dashboard" element={<>Dashboard</>} />
           <Route path="*" element={<h1>404- Url Not Found</h1>} />
         </Route>
       </Routes>
