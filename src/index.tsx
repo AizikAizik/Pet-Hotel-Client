@@ -7,20 +7,24 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./routes/HomePage";
 import LoginPage from "./routes/LoginPage";
 import SignUpPage from "./routes/SignUpPage";
+import { StoreProvider } from "easy-peasy";
+import store from "./state/store";
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />}>
-          <Route index element={<Home />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/dashboard" element={<>Dashboard</>} />
-          <Route path="*" element={<h1>404- Url Not Found</h1>} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <StoreProvider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />}>
+            <Route index element={<Home />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/dashboard" element={<>Dashboard</>} />
+            <Route path="*" element={<h1>404- Url Not Found</h1>} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </StoreProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
