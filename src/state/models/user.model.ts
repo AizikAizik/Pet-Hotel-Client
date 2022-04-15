@@ -19,11 +19,12 @@ export interface UserSession {
   setUserInfo: Action<UserSession, UserInfo>;
   setIsLoading: Action<UserSession, boolean>;
   setError: Action<UserSession, any>;
-  login: Thunk<
-    UserSession,
-    { password: string; email: string; fullName?: string }
-  >;
+  login: Thunk<UserSession, { password: string; email: string }>;
   logout: Action<UserSession, null>;
+  register: Thunk<
+    UserSession,
+    { password: string; email: string; fullName: string }
+  >;
 }
 
 const userInfoFromStorage = localStorage.getItem("userInfo")
@@ -63,6 +64,30 @@ export const UserModel: UserSession = {
       actions.setIsLoading(true);
       const { data } = await axios.post(
         "https://peaceful-garden-90498.herokuapp.com/api/users/login",
+        payload
+      );
+      console.log(data);
+      actions.setIsLoading(false);
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      actions.setLoggedIn(true);
+      actions.setUserInfo(data);
+      actions.setToken(data.token);
+      actions.setError(null);
+    } catch (error: any) {
+      actions.setError(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+      );
+      actions.setIsLoading(false);
+    }
+  }),
+
+  register: thunk(async (actions, payload) => {
+    try {
+      actions.setIsLoading(true);
+      const { data } = await axios.post(
+        "https://peaceful-garden-90498.herokuapp.com/api/users/register",
         payload
       );
       console.log(data);

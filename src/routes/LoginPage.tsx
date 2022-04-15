@@ -38,6 +38,11 @@ export default function LoginPage() {
 
   const loginAction = useStoreActions((action) => action.userSession.login);
 
+  const submitHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    await loginAction({ password, email });
+    navigate(`/dashboard`);
+  };
+
   return (
     <Container size={420} my={40}>
       <Title align="center">Welcome back!</Title>
@@ -81,7 +86,8 @@ export default function LoginPage() {
           fullWidth
           mt="xl"
           sx={{ backgroundColor: "#425168" }}
-          onClick={() => loginAction({ password, email })}
+          onClick={submitHandler}
+          // onClick={() => loginAction({ password, email })}
         >
           Sign in
         </Button>
