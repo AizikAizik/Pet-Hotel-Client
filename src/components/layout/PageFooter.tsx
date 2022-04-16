@@ -13,9 +13,9 @@ interface PageFooterProps {}
 const useStyles = createStyles((theme) => ({
   footer: {
     marginTop: 120,
+    color: theme.white,
     paddingTop: theme.spacing.xl * 2,
     paddingBottom: theme.spacing.xl * 2,
-    color: theme.white,
     backgroundColor:
       theme.colorScheme === "dark"
         ? theme.colors.dark[6]
