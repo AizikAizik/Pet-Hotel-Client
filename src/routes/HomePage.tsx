@@ -13,7 +13,11 @@ const useStyles = createStyles((theme) => ({
     width: "100%",
     height: "auto",
   },
-  pricing__header: {},
+  pricing__header: {
+    width: "100%",
+    textAlign: "center",
+    height: "150px",
+  },
   pricing__body: {
     display: "flex",
     justifyContent: "space-between",
@@ -36,14 +40,20 @@ export default function Home() {
         </Container>
       </main>
       <section className={classes.pricing}>
-        <Container>
+        <Container mt={"xl"}>
           <section className={classes.pricing__wrapper}>
-            <div className={classes.pricing__header}>
-              <h2>Our Plans</h2>
-              <p>
+            <Group
+              position="center"
+              direction={"column"}
+              className={classes.pricing__header}
+            >
+              <Title order={2} sx={{ fontSize: "2rem" }}>
+                Our Packages
+              </Title>
+              <Text>
                 We offer very special plans just for you and your little family.
-              </p>
-            </div>
+              </Text>
+            </Group>
             <div className={classes.pricing__body}>
               <PricingCard
                 title="Friendly Pack"
