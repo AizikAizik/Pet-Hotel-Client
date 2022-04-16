@@ -75,7 +75,7 @@ export default function PageFooter({}: PageFooterProps) {
         <div className={classes.logo}>
           <Logo />
           <Text size="xs" color="dimmed" className={classes.description}>
-            Build fully functional accessible web applications faster than ever
+            Get the best the accommodation for your pets
           </Text>
         </div>
       </Container>
