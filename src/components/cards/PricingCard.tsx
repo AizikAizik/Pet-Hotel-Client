@@ -1,12 +1,4 @@
-import {
-  Card,
-  Button,
-  Title,
-  List,
-  Center,
-  Text,
-  createStyles,
-} from "@mantine/core";
+import { Card, Button, List, Center, Text, createStyles } from "@mantine/core";
 import React from "react";
 
 interface PricingCardProps {
@@ -21,9 +13,9 @@ const useStyles = createStyles((theme) => ({
   },
   card: {
     display: "flex",
+    flex: "0 1 33.33%",
     flexDirection: "column",
     justifyContent: "space-between",
-    flex: "0 1 33.33%",
   },
 }));
 

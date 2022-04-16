@@ -5,8 +5,8 @@ const useStyles = createStyles((theme) => ({
   main: {
     width: "100%",
     height: "600px",
-    backgroundColor: "#FFF2BD",
     color: "#425168",
+    backgroundColor: "#FFF2BD",
   },
   pricing: {},
   pricing__wrapper: {
@@ -15,13 +15,13 @@ const useStyles = createStyles((theme) => ({
   },
   pricing__header: {
     width: "100%",
-    textAlign: "center",
     height: "150px",
+    textAlign: "center",
   },
   pricing__body: {
     display: "flex",
-    justifyContent: "space-between",
     flexWrap: "wrap",
+    justifyContent: "space-between",
   },
 }));
 export default function Home() {
