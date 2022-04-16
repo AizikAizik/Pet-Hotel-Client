@@ -1,4 +1,12 @@
-import { Card, Button } from "@mantine/core";
+import {
+  Card,
+  Button,
+  Title,
+  List,
+  Center,
+  Text,
+  createStyles,
+} from "@mantine/core";
 import React from "react";
 
 interface PricingCardProps {
@@ -7,21 +15,47 @@ interface PricingCardProps {
   items: string[];
 }
 
+const useStyles = createStyles((theme) => ({
+  card__title: {
+    fontSize: theme.fontSizes.xl,
+  },
+  card: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    flex: "0 1 33.33%",
+  },
+}));
+
 export default function PricingCard({ title, price, items }: PricingCardProps) {
+  const { classes } = useStyles();
   return (
-    <Card shadow={"sm"} p="lg">
-      <h5 className="card__title">{title}</h5>
-      <div className="card__value">
+    <Card p="lg" shadow={"sm"} className={classes.card}>
+      <Text align="center" className={classes.card__title}>
+        {title}
+      </Text>
+      <Center sx={{ height: "60px" }} className="card__value">
         <span className="symbol">&#36;</span>
         <span className="num">{price}</span>
         <span className="slash">/</span>
         <span>stay</span>
-      </div>
-      <ul className="card__items">
+      </Center>
+      <List
+        mb="md"
+        size={"sm"}
+        spacing={"xs"}
+        listStyleType={"none"}
+        sx={{ textAlign: "center" }}
+        className="card__items"
+      >
         {items.map((item) => {
-          return <li className="card__item">{item}</li>;
+          return (
+            <List.Item className="card__item">
+              <Text size="md">{item}</Text>
+            </List.Item>
+          );
         })}
-      </ul>
+      </List>
       <Button color="teal" size="md">
         Book Now
       </Button>
