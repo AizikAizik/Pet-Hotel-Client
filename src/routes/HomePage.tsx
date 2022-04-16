@@ -9,7 +9,16 @@ const useStyles = createStyles((theme) => ({
     color: "#425168",
   },
   pricing: {},
-  pricing__wrapper: {},
+  pricing__wrapper: {
+    width: "100%",
+    height: "auto",
+  },
+  pricing__header: {},
+  pricing__body: {
+    display: "flex",
+    justifyContent: "space-between",
+    flexWrap: "wrap",
+  },
 }));
 export default function Home() {
   const { classes } = useStyles();
@@ -29,13 +38,13 @@ export default function Home() {
       <section className={classes.pricing}>
         <Container>
           <section className={classes.pricing__wrapper}>
-            <div className="pricing__header">
+            <div className={classes.pricing__header}>
               <h2>Our Plans</h2>
               <p>
                 We offer very special plans just for you and your little family.
               </p>
             </div>
-            <div className="pricing__body">
+            <div className={classes.pricing__body}>
               <PricingCard
                 title="Friendly Pack"
                 price="100"
