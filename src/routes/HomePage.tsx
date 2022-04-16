@@ -21,6 +21,7 @@ const useStyles = createStyles((theme) => ({
   pricing__body: {
     display: "flex",
     flexWrap: "wrap",
+    alignItems: "center",
     justifyContent: "space-between",
   },
 }));
