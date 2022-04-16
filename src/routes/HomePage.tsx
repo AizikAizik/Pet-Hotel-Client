@@ -19,6 +19,7 @@ const useStyles = createStyles((theme) => ({
     textAlign: "center",
   },
   pricing__body: {
+    height: "auto",
     display: "flex",
     flexWrap: "wrap",
     alignItems: "center",
