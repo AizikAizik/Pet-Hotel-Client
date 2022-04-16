@@ -1,41 +1,18 @@
-import axios from "axios";
-import { Action, action, createStore, Thunk, thunk } from "easy-peasy";
-interface UserSession {
-  isLoggedIn: boolean;
-  token: string | null;
-  setToken: Action<UserSession, string>;
-  setLoggedIn: Action<UserSession, boolean>;
-  login: Thunk<UserSession, {}>;
-  logout: Action<UserSession, null>;
-}
+import { createStore, createTypedHooks } from "easy-peasy";
+import { UserModel, UserSession } from "./models/user.model";
+
 interface StoreModel {
   userSession: UserSession;
 }
 
 const store = createStore<StoreModel>({
-  userSession: {
-    isLoggedIn: false,
-    token: null,
-    setToken: action((state, payload) => {
-      state.token = payload;
-    }),
-    setLoggedIn: action((state, payload) => {
-      state.isLoggedIn = payload;
-    }),
-
-    login: thunk(async (actions, payload) => {
-      const { data } = await axios.post(
-        "https://peaceful-garden-90498.herokuapp.com/api/users/login",
-        payload
-      );
-      console.log(data);
-    }),
-
-    logout: action((state, payload) => {
-      state.isLoggedIn = false;
-      state.token = null;
-    }),
-  },
+  userSession: UserModel,
 });
+
+const typedHooks = createTypedHooks<StoreModel>();
+
+export const useStoreActions = typedHooks.useStoreActions;
+export const useStoreDispatch = typedHooks.useStoreDispatch;
+export const useStoreState = typedHooks.useStoreState;
 
 export default store;
