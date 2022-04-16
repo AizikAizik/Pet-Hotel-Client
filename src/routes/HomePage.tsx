@@ -37,6 +37,17 @@ export default function Home() {
             </div>
             <div className="pricing__body">
               <PricingCard
+                title="Friendly Pack"
+                price="100"
+                items={[
+                  "5 days service",
+                  "Pet Shower",
+                  "Basic Checkup",
+                  "Grooming",
+                  "Hair and Nail Cut",
+                ]}
+              />
+              <PricingCard
                 title="Exclusive Pack"
                 price="175"
                 items={[
@@ -48,6 +59,17 @@ export default function Home() {
                   "Control Hair Falling",
                   "Fresh Snack",
                   "Pet Park & Games",
+                ]}
+              />
+              <PricingCard
+                title="Family Pack"
+                price="200"
+                items={[
+                  "30 days service",
+                  "Pet Shower",
+                  "Basic Checkup",
+                  "Grooming",
+                  "Hair and Nail Cut",
                 ]}
               />
             </div>
