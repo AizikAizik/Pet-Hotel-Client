@@ -12,11 +12,16 @@ import {
   Button,
   Loader,
   Notification,
+  Space,
 } from "@mantine/core";
 import { X } from "tabler-icons-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useInputState } from "@mantine/hooks";
-import { useStoreActions, useStoreState } from "../state/store";
+import {
+  useStoreActions,
+  useStoreDispatch,
+  useStoreState,
+} from "../state/store";
 
 export default function LoginPage() {
   const [email, setEmail] = useInputState("");
@@ -28,6 +33,14 @@ export default function LoginPage() {
 
   const { isLoading, userInfo, error } = userSessionState;
 
+  const loginAction = useStoreActions((action) => action.userSession.login);
+  const dispatch = useStoreDispatch();
+
+  const submitHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    //await loginAction({ password, email });
+    dispatch(loginAction({ password, email }));
+  };
+
   // this useEffect checks if the user is already logged in
   // if user is logged in then redirect user to dashboard page automatically
   useEffect(() => {
@@ -35,13 +48,6 @@ export default function LoginPage() {
       navigate(`/dashboard`);
     }
   }, [navigate, userInfo]);
-
-  const loginAction = useStoreActions((action) => action.userSession.login);
-
-  const submitHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    await loginAction({ password, email });
-    navigate(`/dashboard`);
-  };
 
   return (
     <Container size={420} my={40}>
@@ -53,11 +59,23 @@ export default function LoginPage() {
         </Anchor>
       </Text>
 
-      {isLoading && <Loader />}
+      {isLoading && (
+        <>
+          <Space h="lg" />
+          <Loader />
+        </>
+      )}
       {error && (
-        <Notification icon={<X size={18} />} color="red" title="Error Occured">
-          {error}
-        </Notification>
+        <>
+          <Space h="lg" />
+          <Notification
+            icon={<X size={18} />}
+            color="red"
+            title="Error Occured"
+          >
+            {error}
+          </Notification>
+        </>
       )}
 
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
