@@ -43,7 +43,9 @@ export default function PricingCard({ title, price, items }: PricingCardProps) {
         {items.map((item, index) => {
           return (
             <List.Item key={index} className="card__item">
-              <Text size="md">{item}</Text>
+              <Text key={index} size="md">
+                {item}
+              </Text>
             </List.Item>
           );
         })}
