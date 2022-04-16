@@ -71,6 +71,7 @@ export default function Home() {
               <PricingCard
                 title="Exclusive Pack"
                 price="175"
+                emphasize={true}
                 items={[
                   "15 days service",
                   "Pet Shower",
