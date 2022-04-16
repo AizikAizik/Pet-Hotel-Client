@@ -5,9 +5,10 @@ interface PricingCardProps {
   title: string;
   price: string;
   items: string[];
+  emphasize?: boolean;
 }
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles((theme, { emphasize }: PricingCardProps) => ({
   card__title: {
     fontSize: theme.fontSizes.xl,
     fontWeight: "600",
@@ -19,10 +20,8 @@ const useStyles = createStyles((theme) => ({
     flexDirection: "column",
     justifyContent: "space-between",
     border: `1px solid ${theme.colors.teal[6]}`,
-    ":nth-child(2)": {
-      backgroundColor: theme.colors.teal[5],
-      color: theme.white,
-    },
+    backgroundColor: emphasize ? theme.colors.teal[5] : theme.white,
+    color: emphasize ? theme.white : "",
     [theme.fn.smallerThan("md")]: {
       margin: "20px 15px",
       flex: "1 1 300px",
@@ -36,10 +35,13 @@ const useStyles = createStyles((theme) => ({
     textAlign: "center",
   },
   card__item: {},
-  item__text: {},
+  item__text: {
+    textTransform: "capitalize",
+    color: emphasize ? theme.white : theme.colors.gray[8],
+  },
   num: {
     fontSize: "3rem",
-    color: theme.colors.green[3],
+    color: emphasize ? theme.white : theme.colors.teal[5],
   },
   symbol: {},
   slash: {
@@ -49,8 +51,13 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export default function PricingCard({ title, price, items }: PricingCardProps) {
-  const { classes } = useStyles();
+export default function PricingCard({
+  title,
+  price,
+  items,
+  emphasize,
+}: PricingCardProps) {
+  const { classes } = useStyles({ title, price, items, emphasize });
   return (
     <Card p="lg" shadow={"md"} className={classes.card}>
       <Text align="center" className={classes.card__title}>
