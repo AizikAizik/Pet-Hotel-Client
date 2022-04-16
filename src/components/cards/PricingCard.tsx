@@ -13,7 +13,7 @@ const useStyles = createStyles((theme) => ({
   },
   card: {
     display: "flex",
-    flex: "0 1 33.33%",
+    flex: "0 1 300px",
     flexDirection: "column",
     justifyContent: "space-between",
   },
