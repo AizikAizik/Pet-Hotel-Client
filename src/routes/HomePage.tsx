@@ -58,7 +58,7 @@ export default function Home() {
             </Group>
             <div className={classes.pricing__body}>
               <PricingCard
-                title="Friendly Pack"
+                title="Silver Pack"
                 price="100"
                 items={[
                   "5 days service",
@@ -69,7 +69,7 @@ export default function Home() {
                 ]}
               />
               <PricingCard
-                title="Exclusive Pack"
+                title="Diamond Pack"
                 price="175"
                 emphasize={true}
                 items={[
@@ -84,7 +84,7 @@ export default function Home() {
                 ]}
               />
               <PricingCard
-                title="Family Pack"
+                title="Gold Pack"
                 price="200"
                 items={[
                   "30 days service",
