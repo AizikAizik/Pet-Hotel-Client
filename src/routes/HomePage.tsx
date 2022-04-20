@@ -164,7 +164,7 @@ export default function Home() {
             />
             <TestimonialCard
               name="Charlie Fox"
-              body={`"You pay your subscription to BorrowMyDoggy, but the money
+              body={`"You book a place using keepmypet, but the money
                   that you’d actually spend, you would save if you had to pay
                   for a dog walker."`}
               url={img3}
