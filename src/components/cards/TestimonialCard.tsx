@@ -47,15 +47,17 @@ export default function TestimonialCard(props: TestimonialCardProps) {
 
       <Group position={"center"} className={classes.card__content}>
         <Divider
-          sx={{ width: "50px" }}
           variant="dashed"
           size={"sm"}
           my="sm"
           color={"teal"}
+          labelPosition="center"
+          label={
+            <Title order={4} className={classes.card__name}>
+              {props.name}
+            </Title>
+          }
         />
-        <Title order={4} className={classes.card__name}>
-          {props.name}
-        </Title>
         <Text className={classes.card__body}>{props.body}</Text>
         <Divider
           sx={{ width: "50px" }}
