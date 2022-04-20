@@ -1,6 +1,7 @@
 import {
   Button,
   Container,
+  createStyles,
   Grid,
   NativeSelect,
   SimpleGrid,
@@ -22,7 +23,15 @@ import { useNavigate } from "react-router-dom";
 
 countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
 
+const useStyles = createStyles((theme) => ({
+  btnStyle: {
+    backgroundColor: theme.colors.teal[6],
+    color: theme.colors.teal[0],
+  },
+}));
+
 export default function ProfilePage() {
+  const { classes, cx } = useStyles();
   // profile state and actions
   const userInfoState = useStoreState((state) => state.userSession.userInfo);
   const fullName = userInfoState!.fullName;
@@ -114,6 +123,7 @@ export default function ProfilePage() {
                 label="City"
                 value={cityValue}
                 onChange={setCityValue}
+                required
               />
               <Space h="lg" />
               <TextInput
@@ -130,8 +140,9 @@ export default function ProfilePage() {
               <Space h="xl" />
               <Space h="xl" />
               <Button
-                variant="gradient"
-                gradient={{ from: "teal", to: "lime", deg: 105 }}
+                // variant="gradient"
+                // gradient={{ from: "teal", to: "lime", deg: 105 }}
+                className={classes.btnStyle}
               >
                 Update Profile
               </Button>

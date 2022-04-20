@@ -52,7 +52,7 @@ export default function SignUpPage() {
   // if user is logged in then redirect user to dashboard page automatically
   useEffect(() => {
     if (userInfo) {
-      navigate(`/dashboard`);
+      navigate(`/dashboard/profile`);
     }
   }, [navigate, userInfo]);
 

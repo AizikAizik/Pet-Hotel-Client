@@ -7,14 +7,14 @@ interface UserInfo {
   email: string;
   isAdmin: boolean;
   pets: {
-    pet: string;
+    pet: "Dog" | "Cat";
     name: string;
     breed?: string;
     image?: string;
     likes?: string;
     dislike?: string;
     age?: number;
-  };
+  }[];
   address: {
     country: string;
     state: string;
