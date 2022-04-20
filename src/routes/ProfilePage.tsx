@@ -3,7 +3,6 @@ import {
   Container,
   Grid,
   NativeSelect,
-  NumberInput,
   SimpleGrid,
   Space,
   TextInput,
@@ -18,68 +17,44 @@ import {
   useStoreDispatch,
   useStoreState,
 } from "../state/store";
+import { useNavigate } from "react-router-dom";
+// import axios from "axios";
 
-//const child = <Skeleton height={140} radius="md" animate={false} />;
 countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
 
 export default function ProfilePage() {
+  // profile state and actions
+  const userInfoState = useStoreState((state) => state.userSession.userInfo);
+  const fullName = userInfoState!.fullName;
+  const email = userInfoState!.email;
+  const address = userInfoState!.address;
+
+  // profiles data state
+  const [fullNameValue, setFullNameValue] = useInputState(fullName);
+  const [emailValue, setEmailValue] = useInputState(email);
+
   const [countryNames] = useState(
     Country.getAllCountries().map((country) => country.name)
   );
-  const [countryValue, setCountryValue] = useState(countryNames[0]);
+  const [countryValue, setCountryValue] = useState(address.country);
   const [countryCode, setCountryCode] = useState(
     countries.getAlpha2Code(countryValue, "en")
   );
   const [statesData, setStatesData] = useState(
     State.getStatesOfCountry(countryCode).map((state) => state.name)
   );
-  const [statesValue, setStatesValue] = useState(statesData[0]);
-  const [cityValue, setCityValue] = useInputState("");
-  const [streetNameValue, setStreetNameValue] = useInputState("");
-  const [zipCodeValue, setZipCodeValue] = useInputState("");
+  const [statesValue, setStatesValue] = useState(address.state);
+  const [cityValue, setCityValue] = useInputState(address.city);
+  const [streetNameValue, setStreetNameValue] = useInputState(address.street);
+  const [zipCodeValue, setZipCodeValue] = useInputState(address.zipCode);
 
-  // profile state and actions
-  const userProfileState = useStoreState((state) => state.profile);
-  const { isLoading, userProfile, error } = userProfileState;
+  const navigate = useNavigate();
 
-  const getProfileAction = useStoreActions(
-    (action) => action.profile.getProfile
-  );
-  const dispatch = useStoreDispatch();
-
-  // profiles data state
-  const [fullName, setFullName] = useInputState("");
-  const [email, setEmail] = useInputState("");
-
-  //   useEffect(() => {
-  //     dispatch(getProfileAction());
-  //     // async function fetchData() {
-  //     //   if (userProfile && userProfile.address) {
-  //     //     setFullName(userProfile.fullName);
-  //     //     setEmail(userProfile.email);
-  //     //     setCountryValue(userProfile.address.country);
-  //     //     setStatesValue(userProfile.address.state);
-  //     //     setCityValue(userProfile.address.city);
-  //     //     if (userProfile.address.street)
-  //     //       setStreetNameValue(userProfile.address.street);
-  //     //     if (userProfile.address.zipCode)
-  //     //       setZipCodeValue(String(userProfile.address.zipCode));
-  //     //   } else {
-  //     //     setFullName(userProfile!.fullName);
-  //     //     setEmail(userProfile!.email);
-  //     //   }
-  //     // }
-  //     // fetchData();
-  //   }, [
-  //     dispatch,
-  //     getProfileAction,
-  //     // setCityValue,
-  //     // setEmail,
-  //     // setFullName,
-  //     // setStreetNameValue,
-  //     // setZipCodeValue,
-  //     // userProfile,
-  //   ]);
+  useEffect(() => {
+    if (!userInfoState) {
+      navigate("/login");
+    }
+  }, [navigate, userInfoState]);
 
   useEffect(() => {
     setCountryCode(countries.getAlpha2Code(countryValue, "en"));
@@ -99,8 +74,8 @@ export default function ProfilePage() {
               <TextInput
                 placeholder="Your FullName"
                 label="Full name"
-                value={fullName}
-                onChange={setFullName}
+                value={fullNameValue}
+                onChange={setFullNameValue}
                 description="You can Update your Full Name"
               />
             </Grid.Col>
@@ -109,8 +84,8 @@ export default function ProfilePage() {
               <TextInput
                 placeholder="Email"
                 label="Email"
-                value={email}
-                onChange={setEmail}
+                value={emailValue}
+                onChange={setEmailValue}
                 description="You can Update your Email Address"
               />
             </Grid.Col>
@@ -147,13 +122,10 @@ export default function ProfilePage() {
                 onChange={setStreetNameValue}
               />
               <Space h="lg" />
-              <NumberInput
+              <TextInput
                 label="Zip Code"
-                description="please enter a valid zip code"
-                placeholder="Your Zip Code"
-                min={1}
-                value={+zipCodeValue}
-                //onChange={setZipCodeValue}
+                value={zipCodeValue ? zipCodeValue : ""}
+                onChange={setZipCodeValue}
               />
               <Space h="xl" />
               <Space h="xl" />
