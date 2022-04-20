@@ -9,6 +9,7 @@ import {
 import { Settings, User, CheckupList } from "tabler-icons-react";
 import { Logo } from "../shared/Logo";
 import { FaDog } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -131,18 +132,19 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const mainLinksMockdata = [
-  { icon: User, label: "My Profile" },
-  { icon: FaDog, label: "My Pets" },
-  { icon: CheckupList, label: "My Bookings" },
-  { icon: Settings, label: "Settings" },
+  { icon: User, label: "profile" },
+  { icon: FaDog, label: "pets" },
+  { icon: CheckupList, label: "bookings" },
+  { icon: Settings, label: "settings" },
 ];
 
-const linksMockdata = ["Profile", "Pets", "Bookings", "Settings"];
+const linksMockdata = ["profile", "pets", "bookings", "settings"];
 
 export default function DashBoard() {
   const { classes, cx } = useStyles();
   const [active, setActive] = useState("My Profile");
   const [activeLink, setActiveLink] = useState(linksMockdata[0]);
+  const navigate = useNavigate();
 
   const mainLinks = mainLinksMockdata.map((link, idx) => (
     <Tooltip
@@ -156,6 +158,7 @@ export default function DashBoard() {
         onClick={() => {
           setActive(link.label);
           setActiveLink(linksMockdata[idx]);
+          navigate(`/dashboard/${link.label}`);
         }}
         className={cx(classes.mainLink, {
           [classes.mainLinkActive]: link.label === active,
@@ -167,20 +170,21 @@ export default function DashBoard() {
   ));
 
   const links = linksMockdata.map((link, idx) => (
-    <a
+    <Link
       className={cx(classes.link, {
         [classes.linkActive]: activeLink === link,
       })}
-      href="/"
+      to={`/dashboard/${link}`}
       onClick={(event) => {
         event.preventDefault();
         setActiveLink(link);
         setActive(mainLinksMockdata[idx].label);
+        navigate(`/dashboard/${link}`);
       }}
       key={link}
     >
       {link}
-    </a>
+    </Link>
   ));
 
   return (

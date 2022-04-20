@@ -11,6 +11,9 @@ import SignUpPage from "./routes/SignUpPage";
 import { StoreProvider } from "easy-peasy";
 import store from "./state/store";
 import ProfilePage from "./routes/ProfilePage";
+import PetPage from "./routes/PetPage";
+import BookingsPage from "./routes/BookingsPage";
+import SettingsPage from "./routes/SettingsPage";
 
 // const container = document.getElementById("root");
 
@@ -25,7 +28,10 @@ ReactDOM.render(
             <Route index element={<Home />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/dashboard" element={<ProfilePage />} />
+            <Route path="/dashboard/profile" element={<ProfilePage />} />
+            <Route path="/dashboard/pets" element={<PetPage />} />
+            <Route path="/dashboard/bookings" element={<BookingsPage />} />
+            <Route path="/dashboard/settings" element={<SettingsPage />} />
             <Route path="*" element={<h1>404- Url Not Found</h1>} />
           </Route>
         </Routes>

@@ -1,37 +1,77 @@
 import {
-  Autocomplete,
   Button,
   Container,
+  createStyles,
   Grid,
-  NumberInput,
+  NativeSelect,
   SimpleGrid,
   Space,
   TextInput,
 } from "@mantine/core";
 import React, { useEffect, useState } from "react";
-import { Country, State, City } from "country-state-city";
+import { Country, State } from "country-state-city";
+import countries from "i18n-iso-countries";
 import DashBoard from "../components/layout/DashBoard";
+import { useInputState } from "@mantine/hooks";
+import {
+  useStoreActions,
+  useStoreDispatch,
+  useStoreState,
+} from "../state/store";
+import { useNavigate } from "react-router-dom";
+// import axios from "axios";
 
-//const child = <Skeleton height={140} radius="md" animate={false} />;
-console.log(Country.getAllCountries());
+countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
 
-interface CountryMap {
-  value: string;
-  flag: string;
-  countryCode: string;
-}
+const useStyles = createStyles((theme) => ({
+  btnStyle: {
+    backgroundColor: theme.colors.teal[6],
+    color: theme.colors.teal[0],
+  },
+}));
 
 export default function ProfilePage() {
-  const countries = Country.getAllCountries();
-  const [countryValue, setCountryValue] = useState(countries[0].name);
+  const { classes, cx } = useStyles();
+  // profile state and actions
+  const userInfoState = useStoreState((state) => state.userSession.userInfo);
+  const fullName = userInfoState!.fullName;
+  const email = userInfoState!.email;
+  const address = userInfoState!.address;
 
-  const countryMap = countries.map((country) => ({
-    value: country.name,
-    flag: country.flag,
-    countryCode: country.isoCode,
-  })) as CountryMap[];
+  // profiles data state
+  const [fullNameValue, setFullNameValue] = useInputState(fullName);
+  const [emailValue, setEmailValue] = useInputState(email);
 
-  useEffect(() => {});
+  const [countryNames] = useState(
+    Country.getAllCountries().map((country) => country.name)
+  );
+  const [countryValue, setCountryValue] = useState(address.country);
+  const [countryCode, setCountryCode] = useState(
+    countries.getAlpha2Code(countryValue, "en")
+  );
+  const [statesData, setStatesData] = useState(
+    State.getStatesOfCountry(countryCode).map((state) => state.name)
+  );
+  const [statesValue, setStatesValue] = useState(address.state);
+  const [cityValue, setCityValue] = useInputState(address.city);
+  const [streetNameValue, setStreetNameValue] = useInputState(address.street);
+  const [zipCodeValue, setZipCodeValue] = useInputState(address.zipCode);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!userInfoState) {
+      navigate("/login");
+    }
+  }, [navigate, userInfoState]);
+
+  useEffect(() => {
+    setCountryCode(countries.getAlpha2Code(countryValue, "en"));
+    setStatesData(
+      State.getStatesOfCountry(countryCode).map((state) => state.name)
+    );
+  }, [countryValue, countryCode]);
+
   return (
     <>
       <SimpleGrid cols={3} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
@@ -43,6 +83,8 @@ export default function ProfilePage() {
               <TextInput
                 placeholder="Your FullName"
                 label="Full name"
+                value={fullNameValue}
+                onChange={setFullNameValue}
                 description="You can Update your Full Name"
               />
             </Grid.Col>
@@ -51,6 +93,8 @@ export default function ProfilePage() {
               <TextInput
                 placeholder="Email"
                 label="Email"
+                value={emailValue}
+                onChange={setEmailValue}
                 description="You can Update your Email Address"
               />
             </Grid.Col>
@@ -58,29 +102,47 @@ export default function ProfilePage() {
               <Space h="xl" />
               <p>Address Details</p>
               <Space h="xl" />
-              <Autocomplete
+              <NativeSelect
+                data={countryNames}
                 label="Country"
                 value={countryValue}
-                onChange={setCountryValue}
-                limit={6}
-                data={countryMap}
+                onChange={(event) => setCountryValue(event.currentTarget.value)}
+                required
               />
               <Space h="lg" />
-              <TextInput placeholder="State" label="State" />
+              <NativeSelect
+                data={statesData}
+                label="State"
+                value={statesValue}
+                onChange={(event) => setStatesValue(event.currentTarget.value)}
+                required
+              />
               <Space h="lg" />
-              <TextInput placeholder="City" label="City" />
+              <TextInput
+                placeholder="City"
+                label="City"
+                value={cityValue}
+                onChange={setCityValue}
+                required
+              />
               <Space h="lg" />
-              <NumberInput
+              <TextInput
+                label="Street"
+                value={streetNameValue}
+                onChange={setStreetNameValue}
+              />
+              <Space h="lg" />
+              <TextInput
                 label="Zip Code"
-                description="please enter a valid zip code"
-                placeholder="Your Zip Code"
-                min={1}
+                value={zipCodeValue ? zipCodeValue : ""}
+                onChange={setZipCodeValue}
               />
               <Space h="xl" />
               <Space h="xl" />
               <Button
-                variant="gradient"
-                gradient={{ from: "teal", to: "lime", deg: 105 }}
+                // variant="gradient"
+                // gradient={{ from: "teal", to: "lime", deg: 105 }}
+                className={classes.btnStyle}
               >
                 Update Profile
               </Button>

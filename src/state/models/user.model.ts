@@ -6,6 +6,22 @@ interface UserInfo {
   fullName: string;
   email: string;
   isAdmin: boolean;
+  pets: {
+    pet: "Dog" | "Cat";
+    name: string;
+    breed?: string;
+    image?: string;
+    likes?: string;
+    dislike?: string;
+    age?: number;
+  }[];
+  address: {
+    country: string;
+    state: string;
+    city: string;
+    street?: string;
+    zipCode?: number;
+  };
 }
 
 export interface UserSession {
@@ -68,10 +84,21 @@ export const UserModel: UserSession = {
       );
       console.log(data);
       actions.setIsLoading(false);
-      localStorage.setItem("userInfo", JSON.stringify(data));
-      actions.setLoggedIn(true);
-      actions.setUserInfo(data);
       actions.setToken(data.token);
+      const options = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${data.token}`,
+        },
+      };
+
+      const { data: data2 } = await axios.get(
+        "https://peaceful-garden-90498.herokuapp.com/api/users/profile",
+        options
+      );
+      localStorage.setItem("userInfo", JSON.stringify(data2));
+      actions.setLoggedIn(true);
+      actions.setUserInfo(data2);
       actions.setError(null);
     } catch (error: any) {
       actions.setError(
@@ -92,10 +119,21 @@ export const UserModel: UserSession = {
       );
       console.log(data);
       actions.setIsLoading(false);
-      localStorage.setItem("userInfo", JSON.stringify(data));
-      actions.setLoggedIn(true);
-      actions.setUserInfo(data);
       actions.setToken(data.token);
+      const options = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${data.token}`,
+        },
+      };
+
+      const { data: data2 } = await axios.get(
+        "https://peaceful-garden-90498.herokuapp.com/api/users/profile",
+        options
+      );
+      localStorage.setItem("userInfo", JSON.stringify(data2));
+      actions.setLoggedIn(true);
+      actions.setUserInfo(data2);
       actions.setError(null);
     } catch (error: any) {
       actions.setError(
@@ -111,5 +149,6 @@ export const UserModel: UserSession = {
     state.isLoggedIn = false;
     state.token = null;
     localStorage.removeItem("userInfo");
+    state.userInfo = null;
   }),
 };
