@@ -1,5 +1,18 @@
-import { Container, createStyles, Title, Text, Group } from "@mantine/core";
+import {
+  Container,
+  createStyles,
+  Title,
+  Text,
+  Group,
+  Image,
+  Box,
+} from "@mantine/core";
 import PricingCard from "../components/cards/PricingCard";
+import TestimonialCard from "../components/cards/TestimonialCard";
+import mainImg from "../assets/images/main-image.png";
+import img1 from "../assets/images/kevin.png";
+import img2 from "../assets/images/kate.png";
+import img3 from "../assets/images/fox.png";
 
 const useStyles = createStyles((theme) => ({
   main: {
@@ -17,11 +30,33 @@ const useStyles = createStyles((theme) => ({
     width: "100%",
     height: "150px",
     textAlign: "center",
+    color: "#425168",
   },
   pricing__body: {
+    height: "auto",
     display: "flex",
     flexWrap: "wrap",
+    alignItems: "center",
     justifyContent: "space-between",
+  },
+  testimonial: {
+    width: "100%",
+    height: "auto",
+    backgroundColor: "#FFF2BD",
+  },
+  testimonial__header: {
+    width: "100%",
+    height: "150px",
+    textAlign: "center",
+    color: "#425168",
+  },
+  testimonial__cards: {
+    width: "100%",
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: "1rem",
   },
 }));
 export default function Home() {
@@ -37,10 +72,13 @@ export default function Home() {
             </Title>
             <Text size="xl">Get the best the accommodation for your pets </Text>
           </Group>
+          <Group position="center">
+            <Image src={mainImg} />
+          </Group>
         </Container>
       </main>
       <section className={classes.pricing}>
-        <Container mt={"xl"}>
+        <Container mt={"xl"} mb={"xl"}>
           <section className={classes.pricing__wrapper}>
             <Group
               position="center"
@@ -56,7 +94,7 @@ export default function Home() {
             </Group>
             <div className={classes.pricing__body}>
               <PricingCard
-                title="Friendly Pack"
+                title="Silver Pack"
                 price="100"
                 items={[
                   "5 days service",
@@ -67,8 +105,9 @@ export default function Home() {
                 ]}
               />
               <PricingCard
-                title="Exclusive Pack"
+                title="Diamond Pack"
                 price="175"
+                emphasize={true}
                 items={[
                   "15 days service",
                   "Pet Shower",
@@ -81,7 +120,7 @@ export default function Home() {
                 ]}
               />
               <PricingCard
-                title="Family Pack"
+                title="Gold Pack"
                 price="200"
                 items={[
                   "30 days service",
@@ -92,6 +131,44 @@ export default function Home() {
                 ]}
               />
             </div>
+          </section>
+        </Container>
+      </section>
+      <section className={classes.testimonial}>
+        <Container mt={"xl"} py={"3rem"}>
+          <Group
+            position="center"
+            direction={"column"}
+            className={classes.testimonial__header}
+          >
+            <Title order={2} sx={{ fontSize: "2rem" }}>
+              Testimonials
+            </Title>
+            <Text>What pet lovers say about us</Text>
+          </Group>
+          <section className={classes.testimonial__cards}>
+            <TestimonialCard
+              name="Kevin Marks"
+              body={`"Thank you keepmypet for taking excellent care of my doggies,
+                  The best pet care ever! I recommend"`}
+              url={img1}
+            />
+            <TestimonialCard
+              name="Kate Henshaw"
+              body={`"We make it easy to arrange walks, playtime, overnight stays
+                  or holidays. Our aim is to help dog owners when they need it,
+                  give dogs more exercise and playtime and to allow people
+                  without a dog to spend quality time with one. We call it a
+                  win-win (or a woof-­woof) situation for everyone involved."`}
+              url={img2}
+            />
+            <TestimonialCard
+              name="Charlie Fox"
+              body={`"You book a place using keepmypet, but the money
+                  that you’d actually spend, you would save if you had to pay
+                  for a dog walker."`}
+              url={img3}
+            />
           </section>
         </Container>
       </section>
