@@ -9,6 +9,7 @@ import {
 } from "@mantine/core";
 import PricingCard from "../components/cards/PricingCard";
 import TestimonialCard from "../components/cards/TestimonialCard";
+import mainImg from "../assets/images/main-image.png";
 
 const useStyles = createStyles((theme) => ({
   main: {
@@ -67,6 +68,9 @@ export default function Home() {
               We Take Care Of Your Loving Pets
             </Title>
             <Text size="xl">Get the best the accommodation for your pets </Text>
+          </Group>
+          <Group position="center">
+            <Image src={mainImg} />
           </Group>
         </Container>
       </main>
