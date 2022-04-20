@@ -1,5 +1,14 @@
-import { Container, createStyles, Title, Text, Group } from "@mantine/core";
+import {
+  Container,
+  createStyles,
+  Title,
+  Text,
+  Group,
+  Image,
+  Box,
+} from "@mantine/core";
 import PricingCard from "../components/cards/PricingCard";
+import TestimonialCard from "../components/cards/TestimonialCard";
 
 const useStyles = createStyles((theme) => ({
   main: {
@@ -17,6 +26,7 @@ const useStyles = createStyles((theme) => ({
     width: "100%",
     height: "150px",
     textAlign: "center",
+    color: "#425168",
   },
   pricing__body: {
     height: "auto",
@@ -24,6 +34,25 @@ const useStyles = createStyles((theme) => ({
     flexWrap: "wrap",
     alignItems: "center",
     justifyContent: "space-between",
+  },
+  testimonial: {
+    width: "100%",
+    height: "auto",
+    backgroundColor: "#FFF2BD",
+  },
+  testimonial__header: {
+    width: "100%",
+    height: "150px",
+    textAlign: "center",
+    color: "#425168",
+  },
+  testimonial__cards: {
+    width: "100%",
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: "1rem",
   },
 }));
 export default function Home() {
@@ -42,7 +71,7 @@ export default function Home() {
         </Container>
       </main>
       <section className={classes.pricing}>
-        <Container mt={"xl"}>
+        <Container mt={"xl"} mb={"xl"}>
           <section className={classes.pricing__wrapper}>
             <Group
               position="center"
@@ -95,6 +124,41 @@ export default function Home() {
                 ]}
               />
             </div>
+          </section>
+        </Container>
+      </section>
+      <section className={classes.testimonial}>
+        <Container mt={"xl"} py={"3rem"}>
+          <Group
+            position="center"
+            direction={"column"}
+            className={classes.testimonial__header}
+          >
+            <Title order={2} sx={{ fontSize: "2rem" }}>
+              Testimonials
+            </Title>
+            <Text>What pet lovers say about us</Text>
+          </Group>
+          <section className={classes.testimonial__cards}>
+            <TestimonialCard
+              name="Kevin Marks"
+              body={`"Thank you keepmypet for taking excellent care of my doggies,
+                  The best pet care ever! I recommend"`}
+            />
+            <TestimonialCard
+              name="Kate Henshaw"
+              body={`"We make it easy to arrange walks, playtime, overnight stays
+                  or holidays. Our aim is to help dog owners when they need it,
+                  give dogs more exercise and playtime and to allow people
+                  without a dog to spend quality time with one. We call it a
+                  win-win (or a woof-­woof) situation for everyone involved."`}
+            />
+            <TestimonialCard
+              name="Charlie Fox"
+              body={`"You pay your subscription to BorrowMyDoggy, but the money
+                  that you’d actually spend, you would save if you had to pay
+                  for a dog walker."`}
+            />
           </section>
         </Container>
       </section>
