@@ -12,7 +12,6 @@ import { Logo } from "../shared/Logo";
 interface PageFooterProps {}
 const useStyles = createStyles((theme) => ({
   footer: {
-    marginTop: 120,
     color: theme.white,
     paddingTop: theme.spacing.xl * 2,
     paddingBottom: theme.spacing.xl * 2,
