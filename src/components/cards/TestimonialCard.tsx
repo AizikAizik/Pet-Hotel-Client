@@ -42,6 +42,7 @@ export default function TestimonialCard(props: TestimonialCardProps) {
         height={100}
         withPlaceholder={true}
         radius={"xl"}
+        src={props.url}
       />
 
       <Group position={"center"} className={classes.card__content}>

@@ -10,6 +10,9 @@ import {
 import PricingCard from "../components/cards/PricingCard";
 import TestimonialCard from "../components/cards/TestimonialCard";
 import mainImg from "../assets/images/main-image.png";
+import img1 from "../assets/images/kevin.png";
+import img2 from "../assets/images/kate.png";
+import img3 from "../assets/images/fox.png";
 
 const useStyles = createStyles((theme) => ({
   main: {
@@ -148,6 +151,7 @@ export default function Home() {
               name="Kevin Marks"
               body={`"Thank you keepmypet for taking excellent care of my doggies,
                   The best pet care ever! I recommend"`}
+              url={img1}
             />
             <TestimonialCard
               name="Kate Henshaw"
@@ -156,12 +160,14 @@ export default function Home() {
                   give dogs more exercise and playtime and to allow people
                   without a dog to spend quality time with one. We call it a
                   win-win (or a woof-­woof) situation for everyone involved."`}
+              url={img2}
             />
             <TestimonialCard
               name="Charlie Fox"
               body={`"You pay your subscription to BorrowMyDoggy, but the money
                   that you’d actually spend, you would save if you had to pay
                   for a dog walker."`}
+              url={img3}
             />
           </section>
         </Container>
