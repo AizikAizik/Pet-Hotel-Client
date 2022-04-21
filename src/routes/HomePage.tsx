@@ -79,6 +79,18 @@ export default function Home() {
       </main>
       <section className={classes.pricing}>
         <Container mt={"xl"} mb={"xl"}>
+          <Group
+            position="center"
+            direction={"column"}
+            className={classes.testimonial__header}
+          >
+            <Title order={2} sx={{ fontSize: "2rem" }}>
+              Top Hotels
+            </Title>
+            <Text>The very best hotels right now for your pets</Text>
+          </Group>
+        </Container>
+        <Container mt={"xl"} mb={"xl"}>
           <section className={classes.pricing__wrapper}>
             <Group
               position="center"
