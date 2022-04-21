@@ -18,6 +18,7 @@ export default function PetCards({ image, name, pet, breed }: PetProps) {
       <Space h="xl" />
       <Paper
         radius="md"
+        shadow="lg"
         withBorder
         p="lg"
         sx={(theme) => ({

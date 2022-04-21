@@ -60,7 +60,7 @@ export default function ProfilePage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!userInfoState) {
+    if (!localStorage.getItem("token")) {
       navigate("/login");
     }
   }, [navigate, userInfoState]);

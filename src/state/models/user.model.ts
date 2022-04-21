@@ -6,6 +6,7 @@ interface UserInfo {
   fullName: string;
   email: string;
   isAdmin: boolean;
+  token: string;
   pets: {
     pet: "Dog" | "Cat";
     name: string;
@@ -83,7 +84,6 @@ export const UserModel: UserSession = {
         payload
       );
       console.log(data);
-      actions.setIsLoading(false);
       actions.setToken(data.token);
       const options = {
         headers: {
@@ -97,9 +97,11 @@ export const UserModel: UserSession = {
         options
       );
       localStorage.setItem("userInfo", JSON.stringify(data2));
+      localStorage.setItem("token", JSON.stringify(data.token));
       actions.setLoggedIn(true);
       actions.setUserInfo(data2);
       actions.setError(null);
+      actions.setIsLoading(false);
     } catch (error: any) {
       actions.setError(
         error.response && error.response.data.message
@@ -118,7 +120,6 @@ export const UserModel: UserSession = {
         payload
       );
       console.log(data);
-      actions.setIsLoading(false);
       actions.setToken(data.token);
       const options = {
         headers: {
@@ -132,9 +133,11 @@ export const UserModel: UserSession = {
         options
       );
       localStorage.setItem("userInfo", JSON.stringify(data2));
+      localStorage.setItem("token", JSON.stringify(data.token));
       actions.setLoggedIn(true);
       actions.setUserInfo(data2);
       actions.setError(null);
+      actions.setIsLoading(false);
     } catch (error: any) {
       actions.setError(
         error.response && error.response.data.message
