@@ -34,9 +34,8 @@ ReactDOM.render(
             <Route path="/dashboard/pets" element={<PetPage />} />
             <Route path="/dashboard/bookings" element={<BookingsPage />} />
             <Route path="/dashboard/settings" element={<SettingsPage />} />
-            <Route path="hotels" element={<HotelsPage />}>
-              <Route path=":id" element={<HotelDetails />} />
-            </Route>
+            <Route path="hotels" element={<HotelsPage />} />
+            <Route path="hotels/:id" element={<HotelDetails />} />
             <Route path="*" element={<h1>404- Url Not Found</h1>} />
           </Route>
         </Routes>
