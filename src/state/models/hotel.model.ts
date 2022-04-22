@@ -43,6 +43,7 @@ export interface Hotel {
 export interface HotelsSession {
   hotels: Hotel[];
   add: Action<HotelsSession, Hotel>;
+  addAll: Action<HotelsSession, Hotel[]>;
   addComment: Thunk<
     HotelsSession,
     { id: string; comment: string; rating: number }
@@ -55,6 +56,9 @@ export const HotelsModel: HotelsSession = {
   hotels: [],
   add: action((state, payload) => {
     state.hotels.push(payload);
+  }),
+  addAll: action((state, payload) => {
+    state.hotels = payload;
   }),
   addComment: thunk((state, payload) => {}),
   fetchHotel: thunk(async (state, payload) => {
@@ -78,9 +82,7 @@ export const HotelsModel: HotelsSession = {
         headers: {},
       };
       const { data } = await axios(config);
-      data.forEach((item: Hotel) => {
-        state.add(item);
-      });
+      state.addAll(data);
     } catch (error: any) {
       console.error(error);
     }
