@@ -20,7 +20,7 @@ interface HotelComment {
 }
 
 export interface Hotel {
-  id: string;
+  _id: string;
   name: string;
   description: string;
   images: string[];
