@@ -8,6 +8,7 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { FaHotel } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import { Star } from "tabler-icons-react";
 import { Hotel } from "../../state/models/hotel.model";
 
@@ -49,12 +50,14 @@ export default function HotelCard(props: HotelCardProps) {
       </Text>
 
       <Button
+        component={Link}
+        to={`/${props._id}`}
         variant="light"
         color="indigo"
         fullWidth
         style={{ marginTop: 14 }}
       >
-        Book now
+        Check it Out
       </Button>
     </Card>
   );
