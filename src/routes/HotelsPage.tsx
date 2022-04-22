@@ -17,7 +17,7 @@ export default function HotelsPage() {
   }, [fetchHotels]);
 
   return (
-    <Container mt={"xl"} mb={"xl"} sx={{ minHeight: 550, height: "auto" }}>
+    <Container my="xl" sx={{ minHeight: 550, height: "auto" }}>
       {hotels.length !== 0 ? (
         <Grid align={"stretch"} gutter={"md"}>
           {hotels.map((hotel, idx) => {
