@@ -48,7 +48,6 @@ export interface HotelsSession {
     HotelsSession,
     { id: string; comment: string; rating: number }
   >;
-  fetchHotel: Thunk<HotelsSession, { id: string }>;
   fetchAll: Thunk<HotelsSession>;
 }
 
@@ -61,19 +60,6 @@ export const HotelsModel: HotelsSession = {
     state.hotels = payload;
   }),
   addComment: thunk((state, payload) => {}),
-  fetchHotel: thunk(async (state, payload) => {
-    try {
-      let config: AxiosRequestConfig<any> = {
-        method: "get",
-        url: `https://peaceful-garden-90498.herokuapp.com/api/hotel/${payload.id}`,
-        headers: {},
-      };
-      const { data } = await axios(config);
-      console.log(data);
-    } catch (error: any) {
-      console.error(error);
-    }
-  }),
   fetchAll: thunk(async (state) => {
     try {
       let config: AxiosRequestConfig<any> = {
