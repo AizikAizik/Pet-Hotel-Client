@@ -78,7 +78,9 @@ export const HotelsModel: HotelsSession = {
         headers: {},
       };
       const { data } = await axios(config);
-      console.log(data);
+      data.forEach((item: Hotel) => {
+        state.add(item);
+      });
     } catch (error: any) {
       console.error(error);
     }
