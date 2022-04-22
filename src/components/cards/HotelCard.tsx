@@ -7,9 +7,7 @@ import {
   Button,
   useMantineTheme,
 } from "@mantine/core";
-import { FaHotel } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { Star } from "tabler-icons-react";
 import { Hotel } from "../../state/models/hotel.model";
 
 interface HotelCardProps extends Hotel {}
@@ -51,7 +49,7 @@ export default function HotelCard(props: HotelCardProps) {
 
       <Button
         component={Link}
-        to={`/${props._id}`}
+        to={`../hotels/${props._id}`}
         variant="light"
         color="indigo"
         fullWidth
