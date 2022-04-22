@@ -8,14 +8,14 @@ export interface StoreModel {
   userSession: UserSession;
   // profile: Profile;
   pet: PetSession;
-  hotels: HotelsSession;
+  hotelsState: HotelsSession;
 }
 
 const store = createStore<StoreModel>({
   userSession: UserModel,
   pet: petModel,
   // profile: profileModel,
-  hotels: HotelsModel,
+  hotelsState: HotelsModel,
 });
 
 const typedHooks = createTypedHooks<StoreModel>();
