@@ -18,7 +18,7 @@ import AddPet from "../components/layout/AddPet";
 // import axios from "axios";
 
 export default function PetPage() {
-  const userInfoState = useStoreState((state) => state.userSession.userInfo);
+  const userInfoState = useStoreState((state) => state.profile.userProfile);
   const { pets } = userInfoState!;
   const navigate = useNavigate();
   const [opened, setOpened] = useState(false);

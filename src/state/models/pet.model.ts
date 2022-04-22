@@ -1,6 +1,5 @@
 import { action, Action, thunk, Thunk } from "easy-peasy";
 import axios from "axios";
-import { useStoreState } from "../store";
 
 interface PetInfo {
   id: string;
@@ -83,7 +82,6 @@ export const petModel: PetSession = {
         payload,
         options
       );
-      console.log(data);
       actions.setIsLoading(false);
       actions.setPetInfo(data);
       actions.setError(null);
@@ -112,7 +110,6 @@ export const petModel: PetSession = {
         "https://peaceful-garden-90498.herokuapp.com/api/pets",
         options
       );
-      console.log(data);
       actions.setIsLoading(false);
       actions.setPetInfo(data);
       actions.setError(null);
@@ -142,7 +139,6 @@ export const petModel: PetSession = {
         payload,
         options
       );
-      console.log(data);
       actions.setIsLoading(false);
       actions.setPetInfo(data);
       actions.setError(null);
@@ -171,7 +167,6 @@ export const petModel: PetSession = {
         `https://peaceful-garden-90498.herokuapp.com/api/pets/${payload}`,
         options
       );
-      console.log(data);
       actions.setIsLoading(false);
       actions.setPetInfo(data);
       actions.setError(null);
