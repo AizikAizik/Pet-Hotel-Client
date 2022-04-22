@@ -13,6 +13,7 @@ interface ProfileInfo {
   };
   pets: {
     pet: "Dog" | "Cat";
+    _id: string;
     name: string;
     breed?: string;
     image?: string;

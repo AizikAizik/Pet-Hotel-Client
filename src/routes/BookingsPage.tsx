@@ -5,6 +5,7 @@ import { useStoreActions, useStoreState } from "../state/store";
 import { useNavigate } from "react-router-dom";
 import {
   ActionIcon,
+  Button,
   Center,
   Container,
   Grid,
@@ -154,6 +155,13 @@ export default function BookingsPage() {
               </ScrollArea>
             </Grid.Col>
           </Grid>
+          <Center>
+            <Group position="center" grow>
+              <Button color="teal" mt="xl">
+                New Booking
+              </Button>
+            </Group>
+          </Center>
         </Container>
       </SimpleGrid>
     </>
