@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import DashBoard from "../components/layout/DashBoard";
 //import { useInputState } from "@mantine/hooks";
 import { useStoreActions, useStoreState } from "../state/store";
@@ -12,6 +12,7 @@ import {
   Group,
   Loader,
   Menu,
+  Modal,
   ScrollArea,
   SimpleGrid,
   Space,
@@ -20,9 +21,12 @@ import {
   Tooltip,
 } from "@mantine/core";
 import { Pencil, Trash, Eye } from "tabler-icons-react";
+import SingleBooking from "../components/layout/SingleBooking";
 // import axios from "axios";
 
 export default function BookingsPage() {
+  const [opened, setOpened] = useState(false);
+  const [bookingId, setBookingId] = useState("");
   const userInfoState = useStoreState((state) => state.userSession.userInfo);
   const navigate = useNavigate();
 
@@ -98,7 +102,13 @@ export default function BookingsPage() {
                 wrapLines
                 transitionDuration={200}
               >
-                <Eye size={16} />
+                <Eye
+                  size={16}
+                  onClick={() => {
+                    setOpened(true);
+                    setBookingId(item._id);
+                  }}
+                />
               </Tooltip>
             </ActionIcon>
             <Menu transition="pop" withArrow placement="end">
@@ -164,6 +174,15 @@ export default function BookingsPage() {
           </Center>
         </Container>
       </SimpleGrid>
+      <Modal
+        opened={opened}
+        onClose={() => setOpened(false)}
+        title={<Center inline>Booking Details</Center>}
+        size={700}
+        radius="lg"
+      >
+        <SingleBooking bookingId={bookingId} />
+      </Modal>
     </>
   );
 }
