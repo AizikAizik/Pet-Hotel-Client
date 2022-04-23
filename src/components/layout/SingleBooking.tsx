@@ -85,12 +85,11 @@ export default function SingleBooking(props: { bookingId: string }) {
     }
   };
 
-  console.log(bookingDetails);
-
   useEffect(() => {
     fetchBookingById(props.bookingId).then((res) => {
       setBookingDetails(res);
     });
+    //eslint-disable-next-line
   }, []);
 
   return (
@@ -127,18 +126,18 @@ export default function SingleBooking(props: { bookingId: string }) {
                   >
                     Pet Details
                   </Text>
-                  <Group spacing="sm" mt={25}>
+                  <Group spacing="sm" mt={25} direction="column">
                     <Avatar
                       size={40}
                       src={bookingDetails?.petDetails?.image || null}
                       radius={40}
                     />
                     {/* <div> */}
-                    <Text size="sm" weight={500}>
-                      {bookingDetails?.petDetails?.name}
+                    <Text size="sm" weight={500} color="dimmed">
+                      Name: {bookingDetails?.petDetails?.name}
                     </Text>
                     <Text size="xs" color="dimmed">
-                      {bookingDetails?.petDetails?.breed}
+                      Breed: {bookingDetails?.petDetails?.breed}
                     </Text>
                     {/* </div> */}
                   </Group>
@@ -159,7 +158,7 @@ export default function SingleBooking(props: { bookingId: string }) {
                   >
                     Hotel Details
                   </Text>
-                  <Group spacing="sm" mt={25}>
+                  <Group spacing="sm" mt={25} direction="column">
                     <Text size="sm" weight={500}>
                       {bookingDetails?.singleBooking?.hotel.name}
                     </Text>

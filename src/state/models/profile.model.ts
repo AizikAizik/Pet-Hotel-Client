@@ -70,7 +70,7 @@ export const profileModel: Profile = {
     state.error = payload;
   }),
 
-  getProfile: thunk(async (actions, payload) => {
+  getProfile: thunk(async (actions, payload, helpers) => {
     try {
       const token = JSON.parse(localStorage.getItem("token")!);
       actions.setIsLoading(true);

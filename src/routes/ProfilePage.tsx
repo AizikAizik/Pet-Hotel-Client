@@ -12,15 +12,11 @@ import {
   TextInput,
 } from "@mantine/core";
 import React, { useEffect, useState } from "react";
-import { Country, State } from "country-state-city";
+import { Country } from "country-state-city";
 import countries from "i18n-iso-countries";
 import DashBoard from "../components/layout/DashBoard";
 import { useInputState } from "@mantine/hooks";
-import {
-  useStoreActions,
-  useStoreDispatch,
-  useStoreState,
-} from "../state/store";
+import { useStoreActions, useStoreState } from "../state/store";
 import { useNavigate } from "react-router-dom";
 // import axios from "axios";
 
@@ -34,7 +30,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export default function ProfilePage() {
-  const { classes, cx } = useStyles();
+  const { classes } = useStyles();
   // profile state and actions
   const profileInfoState = useStoreState((state) => state.profile.userProfile);
   const profileInfo = useStoreState((state) => state.profile);
@@ -102,6 +98,7 @@ export default function ProfilePage() {
       setFullNameValue(userInfoState.fullName);
       setEmailValue(userInfoState.email);
     }
+    //eslint-disable-next-line
   }, []);
 
   return (
