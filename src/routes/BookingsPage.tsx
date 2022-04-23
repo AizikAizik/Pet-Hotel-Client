@@ -10,6 +10,7 @@ import {
   Container,
   Grid,
   Group,
+  Image,
   Loader,
   Menu,
   Modal,
@@ -22,6 +23,7 @@ import {
 } from "@mantine/core";
 import { Pencil, Trash, Eye } from "tabler-icons-react";
 import SingleBooking from "../components/layout/SingleBooking";
+import noBookingImage from "../assets/gifs/nobooking.gif";
 // import axios from "axios";
 
 export default function BookingsPage() {
@@ -147,22 +149,45 @@ export default function BookingsPage() {
                   <Loader />
                 </Center>
               )}
-              <ScrollArea style={{ width: 600, height: 400 }}>
-                <Table sx={{ minWidth: 800 }} verticalSpacing="sm">
-                  <thead>
-                    <tr>
-                      <th>Hotel</th>
-                      <th>Address</th>
-                      <th>Payment Method</th>
-                      <th>Booking Status</th>
-                      <th>CheckIn Date</th>
-                      <th>CheckOut Date</th>
-                      <th>Edit</th>
-                    </tr>
-                  </thead>
-                  <tbody>{rows}</tbody>
-                </Table>
-              </ScrollArea>
+              {!bookingInfo.length ? (
+                <div
+                  style={{
+                    width: 340,
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    marginBottom: 40,
+                  }}
+                >
+                  <Image
+                    radius="md"
+                    src={noBookingImage}
+                    alt="No booking state"
+                    fit="contain"
+                  />
+                  <Center>
+                    <Text color="dimmed" weight="500" mt="xl">
+                      No Bookings Yet ☹️
+                    </Text>
+                  </Center>
+                </div>
+              ) : (
+                <ScrollArea style={{ width: 600, height: 400 }}>
+                  <Table sx={{ minWidth: 800 }} verticalSpacing="sm">
+                    <thead>
+                      <tr>
+                        <th>Hotel</th>
+                        <th>Address</th>
+                        <th>Payment Method</th>
+                        <th>Booking Status</th>
+                        <th>CheckIn Date</th>
+                        <th>CheckOut Date</th>
+                        <th>Edit</th>
+                      </tr>
+                    </thead>
+                    <tbody>{rows}</tbody>
+                  </Table>
+                </ScrollArea>
+              )}
             </Grid.Col>
           </Grid>
           <Center>
