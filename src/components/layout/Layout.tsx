@@ -12,6 +12,10 @@ export default function Layout({ children }: LayoutProps) {
       label: "Home",
     },
     {
+      link: "hotels",
+      label: "Hotels",
+    },
+    {
       link: "/about",
       label: "About Us",
     },
