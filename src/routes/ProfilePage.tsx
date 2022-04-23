@@ -7,7 +7,6 @@ import {
   Loader,
   NativeSelect,
   SimpleGrid,
-  Skeleton,
   Space,
   Text,
   TextInput,
