@@ -3,6 +3,7 @@ import { NotificationsProvider } from "@mantine/notifications";
 import React from "react";
 import { Outlet } from "react-router-dom";
 import Layout from "./components/layout/Layout";
+import { ModalsProvider } from "@mantine/modals";
 
 function App() {
   return (
@@ -15,11 +16,13 @@ function App() {
         },
       }}
     >
-      <NotificationsProvider>
-        <Layout>
-          <Outlet />
-        </Layout>
-      </NotificationsProvider>
+      <ModalsProvider>
+        <NotificationsProvider>
+          <Layout>
+            <Outlet />
+          </Layout>
+        </NotificationsProvider>
+      </ModalsProvider>
     </MantineProvider>
   );
 }

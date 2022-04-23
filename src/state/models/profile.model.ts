@@ -1,6 +1,5 @@
 import { action, Action, thunk, Thunk } from "easy-peasy";
 import axios from "axios";
-import { useStoreState } from "../store";
 
 interface ProfileInfo {
   fullName: string;
@@ -12,21 +11,49 @@ interface ProfileInfo {
     street?: string;
     zipCode?: number;
   };
+  pets: {
+    pet: "Dog" | "Cat";
+    _id: string;
+    name: string;
+    breed?: string;
+    image?: string;
+    likes?: string;
+    dislike?: string;
+    age?: number;
+  }[];
 }
 
 export interface Profile {
   error: any | null;
   isLoading: boolean;
-  userProfile: ProfileInfo | null;
+  userProfile: ProfileInfo;
   setError: Action<Profile, any>;
   setUserProfile: Action<Profile, ProfileInfo>;
   setIsLoading: Action<Profile, boolean>;
   getProfile: Thunk<Profile>;
+  updateProfile: Thunk<
+    Profile,
+    {
+      fullName?: string;
+      email?: string;
+      address: {
+        country: string;
+        state: string;
+        city?: string;
+        street?: string;
+        zipCode?: string;
+      };
+    }
+  >;
 }
+
+const userProfileFromStorage = localStorage.getItem("userProfile")
+  ? JSON.parse(localStorage.getItem("userProfile")!)
+  : null;
 
 export const profileModel: Profile = {
   isLoading: false,
-  userProfile: null,
+  userProfile: userProfileFromStorage,
   error: null,
 
   // setters
@@ -45,8 +72,7 @@ export const profileModel: Profile = {
 
   getProfile: thunk(async (actions, payload) => {
     try {
-      const userSessionState = useStoreState((state) => state.userSession);
-      const { token } = userSessionState;
+      const token = JSON.parse(localStorage.getItem("token")!);
       actions.setIsLoading(true);
       const options = {
         headers: {
@@ -58,9 +84,39 @@ export const profileModel: Profile = {
         "https://peaceful-garden-90498.herokuapp.com/api/users/profile",
         options
       );
-      console.log(data);
       actions.setIsLoading(false);
+      localStorage.setItem("userProfile", JSON.stringify(data));
       actions.setUserProfile(data);
+      actions.setError(null);
+    } catch (error: any) {
+      actions.setError(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+      );
+      actions.setIsLoading(false);
+    }
+  }),
+
+  updateProfile: thunk(async (actions, payload) => {
+    try {
+      const token = JSON.parse(localStorage.getItem("token")!);
+      actions.setIsLoading(true);
+      const options = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await axios.put(
+        "https://peaceful-garden-90498.herokuapp.com/api/users/profile",
+        payload,
+        options
+      );
+      actions.setIsLoading(false);
+      localStorage.setItem("userProfile", JSON.stringify(data));
+      actions.setUserProfile(data);
+      //actions.getProfile();
       actions.setError(null);
     } catch (error: any) {
       actions.setError(

@@ -1,9 +1,8 @@
 import { action, Action, thunk, Thunk } from "easy-peasy";
 import axios from "axios";
-import { useStoreState } from "../store";
 
 interface PetInfo {
-  id: string;
+  _id: string;
   name: string;
   breed?: string;
   pet: "Dog" | "Cat";
@@ -16,8 +15,9 @@ interface PetInfo {
 export interface PetSession {
   error: any | null;
   isLoading: boolean;
-  petInfo: PetInfo | null;
-  setPetInfo: Action<PetSession, PetInfo>;
+  petInfo: PetInfo[] | [];
+  setPetInfo: Action<PetSession, PetInfo[]>;
+  addToPetInfo: Action<PetSession, PetInfo>;
   setIsLoading: Action<PetSession, boolean>;
   setError: Action<PetSession, any>;
   AddPet: Thunk<
@@ -51,7 +51,7 @@ export interface PetSession {
 
 export const petModel: PetSession = {
   isLoading: false,
-  petInfo: null,
+  petInfo: [],
   error: null,
 
   // actions
@@ -67,7 +67,12 @@ export const petModel: PetSession = {
     state.error = payload;
   }),
 
-  AddPet: thunk(async (actions, payload) => {
+  addToPetInfo: action((state, payload) => {
+    //@ts-ignore
+    state.petInfo.push(payload);
+  }),
+
+  AddPet: thunk(async (actions, payload, s) => {
     const token = JSON.parse(localStorage.getItem("token")!);
     // console.log(token);
     try {
@@ -83,9 +88,9 @@ export const petModel: PetSession = {
         payload,
         options
       );
-      console.log(data);
       actions.setIsLoading(false);
-      actions.setPetInfo(data);
+
+      actions.addToPetInfo(data);
       actions.setError(null);
     } catch (error: any) {
       actions.setError(
@@ -112,7 +117,6 @@ export const petModel: PetSession = {
         "https://peaceful-garden-90498.herokuapp.com/api/pets",
         options
       );
-      console.log(data);
       actions.setIsLoading(false);
       actions.setPetInfo(data);
       actions.setError(null);
@@ -142,7 +146,6 @@ export const petModel: PetSession = {
         payload,
         options
       );
-      console.log(data);
       actions.setIsLoading(false);
       actions.setPetInfo(data);
       actions.setError(null);
@@ -168,12 +171,11 @@ export const petModel: PetSession = {
         },
       };
       const { data } = await axios.delete(
-        `https://peaceful-garden-90498.herokuapp.com/api/pets/${payload}`,
+        `https://peaceful-garden-90498.herokuapp.com/api/pets/${payload.petID}`,
         options
       );
-      console.log(data);
       actions.setIsLoading(false);
-      actions.setPetInfo(data);
+      //   actions.setPetInfo(data);
       actions.setError(null);
     } catch (error: any) {
       actions.setError(

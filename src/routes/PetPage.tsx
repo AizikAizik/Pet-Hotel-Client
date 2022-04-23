@@ -6,10 +6,10 @@ import {
   Button,
   Center,
   Container,
-  Divider,
   Drawer,
   Grid,
   Group,
+  Loader,
   SimpleGrid,
   Space,
 } from "@mantine/core";
@@ -18,8 +18,9 @@ import AddPet from "../components/layout/AddPet";
 // import axios from "axios";
 
 export default function PetPage() {
+  const userPetState = useStoreState((state) => state.pet);
   const userInfoState = useStoreState((state) => state.userSession.userInfo);
-  const { pets } = userInfoState!;
+  const { petInfo, isLoading, error } = userPetState;
   const navigate = useNavigate();
   const [opened, setOpened] = useState(false);
 
@@ -39,24 +40,26 @@ export default function PetPage() {
         <DashBoard />
         <Container>
           <Grid gutter="md">
-            {pets.map((pet, idx) => (
+            {isLoading && (
+              <Center>
+                <Loader />
+              </Center>
+            )}
+            {petInfo.map((pet, idx) => (
               <Grid.Col span={6} key={idx}>
-                <PetCards {...pet} />
+                <PetCards {...pet} fetchPetAction={fetchPetAction} />
               </Grid.Col>
             ))}
           </Grid>
           <Space h="xl" />
           <Space h="xl" />
-          <Divider my="sm" variant="dashed" />
-          <Grid gutter="md">
-            <Center inline>
-              <Group position="center" grow>
-                <Button color="teal" onClick={() => setOpened(true)}>
-                  Add New Pet
-                </Button>
-              </Group>
-            </Center>
-          </Grid>
+          <Center>
+            <Group position="center" grow>
+              <Button color="teal" onClick={() => setOpened(true)}>
+                Add New Pet
+              </Button>
+            </Group>
+          </Center>
         </Container>
         <Drawer
           opened={opened}

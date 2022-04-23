@@ -12,11 +12,7 @@ import {
   Notification,
 } from "@mantine/core";
 import { useInputState } from "@mantine/hooks";
-import {
-  useStoreActions,
-  useStoreDispatch,
-  useStoreState,
-} from "../../state/store";
+import { useStoreActions, useStoreState } from "../../state/store";
 import { X } from "tabler-icons-react";
 
 const useStyles = createStyles((theme) => ({
@@ -78,24 +74,24 @@ export default function AddPet({ toggleDrawer }: AddPetProps) {
 
   // state variables
   const petState = useStoreState((state) => state.pet);
-  const { isLoading, petInfo, error } = petState;
+  const { isLoading, error } = petState;
 
   const addPetAction = useStoreActions((action) => action.pet.AddPet);
-  const dispatch = useStoreDispatch();
+  const fetchPetAction = useStoreActions((action) => action.pet.fetchPet);
+  //const dispatch = useStoreDispatch();
 
   const handleFormSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    dispatch(
-      addPetAction({
-        pet,
-        image: previewSource,
-        breed,
-        age,
-        likes,
-        dislikes,
-        name: petName,
-      })
-    );
+    addPetAction({
+      pet,
+      image: previewSource,
+      breed,
+      age,
+      likes,
+      dislikes,
+      name: petName,
+    });
+    fetchPetAction();
     toggleDrawer(false);
     console.log("data added Successfully");
   };

@@ -7,22 +7,6 @@ interface UserInfo {
   email: string;
   isAdmin: boolean;
   token: string;
-  pets: {
-    pet: "Dog" | "Cat";
-    name: string;
-    breed?: string;
-    image?: string;
-    likes?: string;
-    dislike?: string;
-    age?: number;
-  }[];
-  address: {
-    country: string;
-    state: string;
-    city: string;
-    street?: string;
-    zipCode?: number;
-  };
 }
 
 export interface UserSession {
@@ -84,22 +68,12 @@ export const UserModel: UserSession = {
         payload
       );
       console.log(data);
-      actions.setToken(data.token);
-      const options = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${data.token}`,
-        },
-      };
-
-      const { data: data2 } = await axios.get(
-        "https://peaceful-garden-90498.herokuapp.com/api/users/profile",
-        options
-      );
-      localStorage.setItem("userInfo", JSON.stringify(data2));
+      localStorage.setItem("userInfo", JSON.stringify(data));
       localStorage.setItem("token", JSON.stringify(data.token));
+
+      actions.setToken(data.token);
       actions.setLoggedIn(true);
-      actions.setUserInfo(data2);
+      actions.setUserInfo(data);
       actions.setError(null);
       actions.setIsLoading(false);
     } catch (error: any) {
@@ -119,23 +93,12 @@ export const UserModel: UserSession = {
         "https://peaceful-garden-90498.herokuapp.com/api/users/register",
         payload
       );
-      console.log(data);
-      actions.setToken(data.token);
-      const options = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${data.token}`,
-        },
-      };
-
-      const { data: data2 } = await axios.get(
-        "https://peaceful-garden-90498.herokuapp.com/api/users/profile",
-        options
-      );
-      localStorage.setItem("userInfo", JSON.stringify(data2));
+      localStorage.setItem("userInfo", JSON.stringify(data));
       localStorage.setItem("token", JSON.stringify(data.token));
+
+      actions.setToken(data.token);
       actions.setLoggedIn(true);
-      actions.setUserInfo(data2);
+      actions.setUserInfo(data);
       actions.setError(null);
       actions.setIsLoading(false);
     } catch (error: any) {
@@ -152,6 +115,8 @@ export const UserModel: UserSession = {
     state.isLoggedIn = false;
     state.token = null;
     localStorage.removeItem("userInfo");
+    localStorage.removeItem("userInfo");
+    localStorage.removeItem("userProfile");
     state.userInfo = null;
   }),
 };
