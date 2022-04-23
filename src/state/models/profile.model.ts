@@ -9,7 +9,7 @@ interface ProfileInfo {
     state: string;
     city: string;
     street?: string;
-    zipCode?: number;
+    zipCode?: string;
   };
   pets: {
     pet: "Dog" | "Cat";

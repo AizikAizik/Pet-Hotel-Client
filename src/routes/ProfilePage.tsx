@@ -4,6 +4,7 @@ import {
   createStyles,
   Dialog,
   Grid,
+  Loader,
   NativeSelect,
   SimpleGrid,
   Skeleton,
@@ -39,9 +40,6 @@ export default function ProfilePage() {
   const profileInfoState = useStoreState((state) => state.profile.userProfile);
   const profileInfo = useStoreState((state) => state.profile);
   const userInfoState = useStoreState((state) => state.userSession.userInfo);
-  //   const fullName = userInfoState!.fullName;
-  //   const email = userInfoState?.email;
-  const address = profileInfoState.address;
 
   const { isLoading, error } = profileInfo;
 
@@ -52,7 +50,7 @@ export default function ProfilePage() {
   const [countryNames] = useState(
     Country.getAllCountries().map((country) => country.name)
   );
-  const [countryValue, setCountryValue] = useInputState("");
+  const [countryValue, setCountryValue] = useInputState(countryNames[0]);
   const [statesValue, setStatesValue] = useInputState("");
   const [cityValue, setCityValue] = useInputState("");
   const [streetNameValue, setStreetNameValue] = useInputState("");
@@ -86,14 +84,26 @@ export default function ProfilePage() {
   };
 
   useEffect(() => {
+    getProfileAction();
     if (!userInfoState?.token) {
       navigate("/login");
+    } else if (profileInfoState) {
+      setFullNameValue(profileInfoState.fullName);
+      setEmailValue(profileInfoState.email);
+      if (profileInfoState.address) {
+        setCountryValue(profileInfoState.address.country);
+        setStatesValue(profileInfoState.address.state);
+        setCityValue(profileInfoState.address.city);
+        if (profileInfoState.address.street)
+          setStreetNameValue(profileInfoState.address.street);
+        if (profileInfoState.address.zipCode)
+          setZipCodeValue(profileInfoState.address.zipCode);
+      }
     } else {
-      getProfileAction();
       setFullNameValue(userInfoState.fullName);
       setEmailValue(userInfoState.email);
     }
-  }, [navigate, getProfileAction, userInfoState]);
+  }, []);
 
   return (
     <>
@@ -105,9 +115,7 @@ export default function ProfilePage() {
               <Grid.Col span={12}>
                 <Space h="xl" />
                 <Space h="xl" />
-                <Skeleton height={8} radius="xl" py="xl" />
-                <Skeleton height={8} mt={6} radius="xl" />
-                <Skeleton height={8} mt={6} width="70%" radius="xl" />
+                <Loader />
               </Grid.Col>
             ) : (
               <>
@@ -138,7 +146,7 @@ export default function ProfilePage() {
                   <NativeSelect
                     data={countryNames}
                     label="Country"
-                    value={address?.country || countryNames[0]}
+                    value={countryValue}
                     onChange={(event) =>
                       setCountryValue(event.currentTarget.value)
                     }
@@ -164,13 +172,13 @@ export default function ProfilePage() {
                   <Space h="lg" />
                   <TextInput
                     label="Street"
-                    value={address?.street}
+                    value={streetNameValue}
                     onChange={setStreetNameValue}
                   />
                   <Space h="lg" />
                   <TextInput
                     label="Zip Code"
-                    value={address?.zipCode}
+                    value={zipCodeValue}
                     onChange={setZipCodeValue}
                   />
                   <Space h="xl" />
