@@ -9,7 +9,7 @@ interface LayoutProps {
 }
 export default function Layout({ children }: LayoutProps) {
   const isLoggedIn = useStoreState(
-    (state: State<StoreModel>) => state.userSession.isLoggedIn
+    (state: State<StoreModel>) => state.userSession.userInfo
   );
 
   const isAuthLink = (value: { link: string; label: string }) => {

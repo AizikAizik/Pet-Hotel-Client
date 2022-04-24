@@ -107,9 +107,9 @@ export default function PageHeader({ links }: PageHeaderProps) {
   const user = useStoreState(
     (state: State<StoreModel>) => state.userSession.userInfo
   );
-  const isLoggedIn = useStoreState(
-    (state: State<StoreModel>) => state.userSession.isLoggedIn
-  );
+  // const isLoggedIn = useStoreState(
+  //   (state: State<StoreModel>) => state.userSession
+  // );
   const [opened, toggleOpened] = useBooleanToggle(false);
   const [active, setActive] = useState(links[0].link);
   const { classes, cx } = useStyles();
@@ -164,7 +164,7 @@ export default function PageHeader({ links }: PageHeaderProps) {
         <Logo />
         <Group spacing={5} className={classes.links}>
           {items}
-          {user && isLoggedIn ? profileLink(user) : null}
+          {user ? profileLink(user) : null}
         </Group>
         <Burger
           opened={opened}
@@ -177,7 +177,7 @@ export default function PageHeader({ links }: PageHeaderProps) {
           {(styles) => (
             <Paper className={classes.dropdown} withBorder style={styles}>
               {items}
-              {user && isLoggedIn ? profileLink(user) : null}
+              {user ? profileLink(user) : null}
             </Paper>
           )}
         </Transition>
