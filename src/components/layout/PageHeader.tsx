@@ -6,17 +6,22 @@ import {
   Burger,
   Paper,
   Transition,
+  Avatar,
+  Space,
 } from "@mantine/core";
 import { useBooleanToggle } from "@mantine/hooks";
+import { State, useStoreState } from "easy-peasy";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { UserInfo } from "../../state/models/user.model";
+import { StoreModel } from "../../state/store";
 import { Logo } from "../shared/Logo";
 
 const HEADER_HEIGHT = 70;
 const useStyles = createStyles((theme) => ({
   root: {
     position: "relative",
-    zIndex: 1,
+    zIndex: 99,
   },
 
   dropdown: {
@@ -80,6 +85,12 @@ const useStyles = createStyles((theme) => ({
     },
   },
 
+  profileLink: {
+    display: "flex",
+    alignItems: "center",
+    padding: "0px 6px",
+  },
+
   linkActive: {
     "&, &:hover": {
       backgroundColor: theme.colors.teal[6],
@@ -93,9 +104,16 @@ interface PageHeaderProps {
 }
 
 export default function PageHeader({ links }: PageHeaderProps) {
+  const user = useStoreState(
+    (state: State<StoreModel>) => state.userSession.userInfo
+  );
+  const isLoggedIn = useStoreState(
+    (state: State<StoreModel>) => state.userSession.isLoggedIn
+  );
   const [opened, toggleOpened] = useBooleanToggle(false);
   const [active, setActive] = useState(links[0].link);
   const { classes, cx } = useStyles();
+
   const items = links.map((link) => (
     <Link
       key={link.label}
@@ -111,15 +129,42 @@ export default function PageHeader({ links }: PageHeaderProps) {
       {link.label}
     </Link>
   ));
+
+  const profileLink = (user: UserInfo) => {
+    // get initials from fullname. can be extracted into a util.js file
+    const getInitials = (fullname: string, glue: boolean) => {
+      var initials = fullname.replace(/[^a-zA-Z- ]/g, "").match(/\b\w/g);
+      if (glue && initials) {
+        return initials.join("");
+      }
+      return initials;
+    };
+
+    return (
+      <Link
+        to="/dashboard/profile"
+        className={cx(classes.link, classes.profileLink)}
+      >
+        Profile
+        <Space mr={"xs"} />
+        <Avatar src={null} alt={user.fullName} radius="xl">
+          {getInitials(user.fullName, true)}
+        </Avatar>
+      </Link>
+    );
+  };
+
   return (
     <Header
       sx={{ background: "#FFF2BD", border: "none" }}
       height={HEADER_HEIGHT}
+      className={classes.root}
     >
       <Container className={classes.header}>
         <Logo />
         <Group spacing={5} className={classes.links}>
           {items}
+          {user && isLoggedIn ? profileLink(user) : null}
         </Group>
         <Burger
           opened={opened}
@@ -132,6 +177,7 @@ export default function PageHeader({ links }: PageHeaderProps) {
           {(styles) => (
             <Paper className={classes.dropdown} withBorder style={styles}>
               {items}
+              {user && isLoggedIn ? profileLink(user) : null}
             </Paper>
           )}
         </Transition>
