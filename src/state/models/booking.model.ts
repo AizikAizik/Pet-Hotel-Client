@@ -100,7 +100,6 @@ export const BookingModel: BookingSession = {
         "https://peaceful-garden-90498.herokuapp.com/api/bookings",
         options
       );
-      console.log(data);
       actions.setIsLoading(false);
       actions.setBookingInfo(data);
       actions.setError(null);

@@ -8,6 +8,7 @@ import {
   Button,
   Center,
   Container,
+  Dialog,
   Grid,
   Group,
   Image,
@@ -28,16 +29,27 @@ import noBookingImage from "../assets/gifs/nobooking.gif";
 
 export default function BookingsPage() {
   const [opened, setOpened] = useState(false);
+  const [opened2, setOpened2] = useState(false);
   const [bookingId, setBookingId] = useState("");
   const userInfoState = useStoreState((state) => state.userSession.userInfo);
   const navigate = useNavigate();
 
   const bookingInfoState = useStoreState((state) => state.booking);
-  const { bookingInfo, isLoading } = bookingInfoState;
+  const { bookingInfo, isLoading, deleteMessage } = bookingInfoState;
 
   const fetchBookingAction = useStoreActions(
     (action) => action.booking.fetchBooking
   );
+
+  const deleteBookingAction = useStoreActions(
+    (action) => action.booking.deleteBooking
+  );
+
+  const cancelBookingHandler = async (id: string) => {
+    await deleteBookingAction({ bookingID: id });
+    setOpened2(true);
+    await fetchBookingAction();
+  };
 
   useEffect(() => {
     if (!userInfoState) {
@@ -114,7 +126,11 @@ export default function BookingsPage() {
               </Tooltip>
             </ActionIcon>
             <Menu transition="pop" withArrow placement="end">
-              <Menu.Item icon={<Trash size={16} />} color="red">
+              <Menu.Item
+                icon={<Trash size={16} />}
+                color="red"
+                onClick={() => cancelBookingHandler(item._id)}
+              >
                 Cancel Booking
               </Menu.Item>
             </Menu>
@@ -215,6 +231,19 @@ export default function BookingsPage() {
       >
         <SingleBooking bookingId={bookingId} />
       </Modal>
+      {deleteMessage && (
+        <Dialog
+          opened={opened2}
+          withCloseButton
+          onClose={() => setOpened2(false)}
+          size="lg"
+          radius="md"
+        >
+          <Text size="sm" style={{ marginBottom: 10 }} weight={500}>
+            {deleteMessage.message}
+          </Text>
+        </Dialog>
+      )}
     </>
   );
 }
