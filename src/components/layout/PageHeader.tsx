@@ -7,8 +7,6 @@ import {
   Paper,
   Transition,
   Avatar,
-  Badge,
-  Button,
   Space,
 } from "@mantine/core";
 import { useBooleanToggle } from "@mantine/hooks";
@@ -109,9 +107,13 @@ export default function PageHeader({ links }: PageHeaderProps) {
   const user = useStoreState(
     (state: State<StoreModel>) => state.userSession.userInfo
   );
+  const isLoggedIn = useStoreState(
+    (state: State<StoreModel>) => state.userSession.isLoggedIn
+  );
   const [opened, toggleOpened] = useBooleanToggle(false);
   const [active, setActive] = useState(links[0].link);
   const { classes, cx } = useStyles();
+
   const items = links.map((link) => (
     <Link
       key={link.label}
@@ -152,10 +154,6 @@ export default function PageHeader({ links }: PageHeaderProps) {
     );
   };
 
-  const getProfileLink = () => {
-    return user && user.token ? profileLink(user) : null;
-  };
-
   return (
     <Header
       sx={{ background: "#FFF2BD", border: "none" }}
@@ -166,6 +164,7 @@ export default function PageHeader({ links }: PageHeaderProps) {
         <Logo />
         <Group spacing={5} className={classes.links}>
           {items}
+          {user && isLoggedIn ? profileLink(user) : null}
         </Group>
         <Burger
           opened={opened}
@@ -178,6 +177,7 @@ export default function PageHeader({ links }: PageHeaderProps) {
           {(styles) => (
             <Paper className={classes.dropdown} withBorder style={styles}>
               {items}
+              {user && isLoggedIn ? profileLink(user) : null}
             </Paper>
           )}
         </Transition>
