@@ -1,7 +1,7 @@
 import { action, Action, thunk, Thunk } from "easy-peasy";
 import axios from "axios";
 
-interface UserInfo {
+export interface UserInfo {
   id: string;
   fullName: string;
   email: string;
