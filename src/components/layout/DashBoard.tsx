@@ -2,14 +2,17 @@ import React, { useState } from "react";
 import {
   createStyles,
   Navbar,
+  Text,
   Title,
   Tooltip,
   UnstyledButton,
 } from "@mantine/core";
-import { Settings, User, CheckupList } from "tabler-icons-react";
+import { Settings, User, CheckupList, Logout } from "tabler-icons-react";
 import { Logo } from "../shared/Logo";
 import { FaDog } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
+import { useStoreActions } from "../../state/store";
+import { useModals } from "@mantine/modals";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -136,15 +139,40 @@ const mainLinksMockdata = [
   { icon: FaDog, label: "pets" },
   { icon: CheckupList, label: "bookings" },
   { icon: Settings, label: "settings" },
+  { icon: Logout, label: "logout" },
 ];
 
-const linksMockdata = ["profile", "pets", "bookings", "settings"];
+const linksMockdata = ["profile", "pets", "bookings", "settings", "logout"];
 
 export default function DashBoard() {
   const { classes, cx } = useStyles();
   const [active, setActive] = useState("My Profile");
   const [activeLink, setActiveLink] = useState(linksMockdata[0]);
   const navigate = useNavigate();
+  const modals = useModals();
+
+  const userLogoutAction = useStoreActions(
+    (action) => action.userSession.logout
+  );
+  const profileAction = useStoreActions(
+    (action) => action.profile.setUserProfile
+  );
+
+  const openDeleteModal = () =>
+    modals.openConfirmModal({
+      title: `Delete Pet`,
+      centered: true,
+      children: <Text size="sm">Are you sure you want to logout ?</Text>,
+      labels: { confirm: "Logout", cancel: "Cancel" },
+      confirmProps: { color: "red" },
+      onCancel: () => console.log("Cancel"),
+      onConfirm: async () => {
+        userLogoutAction();
+        //@ts-ignore
+        profileAction(localStorage.getItem("userProfile")!);
+        navigate(`/login`);
+      },
+    });
 
   const mainLinks = mainLinksMockdata.map((link, idx) => (
     <Tooltip
@@ -154,18 +182,33 @@ export default function DashBoard() {
       transitionDuration={0}
       key={link.label}
     >
-      <UnstyledButton
-        onClick={() => {
-          setActive(link.label);
-          setActiveLink(linksMockdata[idx]);
-          navigate(`/dashboard/${link.label}`);
-        }}
-        className={cx(classes.mainLink, {
-          [classes.mainLinkActive]: link.label === active,
-        })}
-      >
-        <link.icon />
-      </UnstyledButton>
+      {link.label === "logout" ? (
+        <UnstyledButton
+          onClick={() => {
+            setActive(link.label);
+            setActiveLink(linksMockdata[idx]);
+            openDeleteModal();
+          }}
+          className={cx(classes.mainLink, {
+            [classes.mainLinkActive]: link.label === active,
+          })}
+        >
+          <link.icon />
+        </UnstyledButton>
+      ) : (
+        <UnstyledButton
+          onClick={() => {
+            setActive(link.label);
+            setActiveLink(linksMockdata[idx]);
+            navigate(`/dashboard/${link.label}`);
+          }}
+          className={cx(classes.mainLink, {
+            [classes.mainLinkActive]: link.label === active,
+          })}
+        >
+          <link.icon />
+        </UnstyledButton>
+      )}
     </Tooltip>
   ));
 

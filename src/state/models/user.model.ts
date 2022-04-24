@@ -21,7 +21,7 @@ export interface UserSession {
   setIsLoading: Action<UserSession, boolean>;
   setError: Action<UserSession, any>;
   login: Thunk<UserSession, { password: string; email: string }>;
-  logout: Action<UserSession, null>;
+  logout: Action<UserSession>;
   register: Thunk<
     UserSession,
     { password: string; email: string; fullName: string }
@@ -111,7 +111,7 @@ export const UserModel: UserSession = {
     }
   }),
 
-  logout: action((state, payload) => {
+  logout: action((state) => {
     state.isLoggedIn = false;
     state.token = null;
     localStorage.removeItem("userInfo");

@@ -1,6 +1,6 @@
 import { Tabs } from "@mantine/core";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import HotelCheckOut from "../../routes/HotelCheckOut";
 import { useStoreState } from "../../state/store";
 
