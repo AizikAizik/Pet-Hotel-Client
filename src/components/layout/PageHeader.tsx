@@ -16,7 +16,7 @@ const HEADER_HEIGHT = 70;
 const useStyles = createStyles((theme) => ({
   root: {
     position: "relative",
-    zIndex: 1,
+    zIndex: 99,
   },
 
   dropdown: {
@@ -115,6 +115,7 @@ export default function PageHeader({ links }: PageHeaderProps) {
     <Header
       sx={{ background: "#FFF2BD", border: "none" }}
       height={HEADER_HEIGHT}
+      className={classes.root}
     >
       <Container className={classes.header}>
         <Logo />
