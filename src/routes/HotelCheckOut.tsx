@@ -10,7 +10,6 @@ import {
   Text,
 } from "@mantine/core";
 import React, { useEffect, useState } from "react";
-import CheckOutSteps from "../components/layout/CheckOutSteps";
 import { Hotel } from "../state/models/hotel.model";
 import axios from "axios";
 import dayjs from "dayjs";
@@ -80,7 +79,7 @@ export default function HotelCheckOut() {
       const petID = pets.find((pet) => pet.name === petNameValue);
       const hotelPackage = hotelPackageValue.split("$")[0].trim();
       const hotelDelivery = hotelDeliveryValue.split("$")[0].trim();
-      const paymentMethod = paymentMethodValue;
+      //const paymentMethod = paymentMethodValue;
       const checkInDate = value[0];
       const checkOutDate = value[1];
       console.log(hotelDelivery);

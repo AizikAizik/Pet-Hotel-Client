@@ -17,7 +17,6 @@ import SettingsPage from "./routes/SettingsPage";
 import HotelsPage from "./routes/HotelsPage";
 import HotelDetails from "./routes/HotelDetails";
 import { NotFoundPage } from "./routes/NotFoundPage";
-import HotelCheckOut from "./routes/HotelCheckOut";
 import CheckOutSteps from "./components/layout/CheckOutSteps";
 
 // const container = document.getElementById("root");
