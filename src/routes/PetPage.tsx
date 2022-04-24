@@ -9,12 +9,15 @@ import {
   Drawer,
   Grid,
   Group,
+  Image,
   Loader,
   SimpleGrid,
   Space,
+  Text,
 } from "@mantine/core";
 import PetCards from "../components/cards/PetCards";
 import AddPet from "../components/layout/AddPet";
+import nopets5 from "../assets/gifs/nopets5.png";
 // import axios from "axios";
 
 export default function PetPage() {
@@ -45,11 +48,40 @@ export default function PetPage() {
                 <Loader />
               </Center>
             )}
-            {petInfo.map((pet, idx) => (
+            {petInfo.length ? (
+              petInfo.map((pet, idx) => (
+                <Grid.Col span={6} key={idx}>
+                  <PetCards {...pet} fetchPetAction={fetchPetAction} />
+                </Grid.Col>
+              ))
+            ) : (
+              <div
+                style={{
+                  width: 540,
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  marginBottom: 40,
+                  marginTop: 40,
+                }}
+              >
+                <Image
+                  radius="md"
+                  src={nopets5}
+                  alt="No booking state"
+                  fit="contain"
+                />
+                <Center>
+                  <Text color="dimmed" weight="500" mt="xl">
+                    No Pets Available Yet ☹️
+                  </Text>
+                </Center>
+              </div>
+            )}
+            {/* {petInfo.map((pet, idx) => (
               <Grid.Col span={6} key={idx}>
                 <PetCards {...pet} fetchPetAction={fetchPetAction} />
               </Grid.Col>
-            ))}
+            ))} */}
           </Grid>
           <Space h="xl" />
           <Space h="xl" />

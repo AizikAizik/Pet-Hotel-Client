@@ -15,7 +15,7 @@ import {
   Space,
 } from "@mantine/core";
 import { X } from "tabler-icons-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useInputState } from "@mantine/hooks";
 import {
   useStoreActions,
@@ -26,10 +26,12 @@ import {
 export default function LoginPage() {
   const [email, setEmail] = useInputState("");
   const [password, setPassword] = useInputState("");
+  const location = useLocation();
 
   const userSessionState = useStoreState((state) => state.userSession);
 
   const navigate = useNavigate();
+  const redirect = location.search ? location.search.split("=")[1] : "/";
 
   const { isLoading, userInfo, error } = userSessionState;
 
@@ -45,7 +47,7 @@ export default function LoginPage() {
   // if user is logged in then redirect user to dashboard page automatically
   useEffect(() => {
     if (userInfo) {
-      navigate(`/dashboard/profile`);
+      navigate("/dashboard/profile");
     }
   }, [navigate, userInfo]);
 
@@ -54,7 +56,11 @@ export default function LoginPage() {
       <Title align="center">Welcome back!</Title>
       <Text color="dimmed" size="sm" align="center" mt={5}>
         Do not have an account yet?{" "}
-        <Anchor size="sm" component={Link} to="/signup">
+        <Anchor
+          size="sm"
+          component={Link}
+          to={redirect ? `/signup?redirect=${redirect}` : "/signup"}
+        >
           Create account
         </Anchor>
       </Text>

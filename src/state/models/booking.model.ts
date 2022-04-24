@@ -39,14 +39,15 @@ export interface BookingSession {
   setBookingInfo: Action<BookingSession, BookingInfo[]>;
   setIsLoading: Action<BookingSession, boolean>;
   setDeleteMessage: Action<BookingSession, any>;
+  addToBookingInfo: Action<BookingSession, BookingInfo>;
   setError: Action<BookingSession, any>;
   addBooking: Thunk<
     BookingSession,
     {
       pet: string;
       hotel: string;
-      hotelPackage: "Gold" | "Silver" | "Diamond";
-      bookingMethod: "PickUp" | "Home";
+      hotelPackage: "Gold" | "Silver" | "Diamond" | string;
+      bookingMethod: "PickUp" | "Home" | string;
       checkInDate: string;
       checkOutDate: string;
     }
@@ -78,6 +79,11 @@ export const BookingModel: BookingSession = {
     state.error = payload;
   }),
 
+  addToBookingInfo: action((state, payload) => {
+    //@ts-ignore
+    state.petInfo.push(payload);
+  }),
+
   // action creators
   fetchBooking: thunk(async (actions, payload) => {
     const token = JSON.parse(localStorage.getItem("token")!);
@@ -94,7 +100,6 @@ export const BookingModel: BookingSession = {
         "https://peaceful-garden-90498.herokuapp.com/api/bookings",
         options
       );
-      console.log(data);
       actions.setIsLoading(false);
       actions.setBookingInfo(data);
       actions.setError(null);
@@ -126,7 +131,7 @@ export const BookingModel: BookingSession = {
       );
       console.log(data);
       actions.setIsLoading(false);
-      actions.setBookingInfo(data);
+      actions.addToBookingInfo(data);
       actions.setError(null);
     } catch (error: any) {
       actions.setError(

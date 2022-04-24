@@ -16,6 +16,8 @@ import BookingsPage from "./routes/BookingsPage";
 import SettingsPage from "./routes/SettingsPage";
 import HotelsPage from "./routes/HotelsPage";
 import HotelDetails from "./routes/HotelDetails";
+import { NotFoundPage } from "./routes/NotFoundPage";
+import CheckOutSteps from "./components/layout/CheckOutSteps";
 
 // const container = document.getElementById("root");
 
@@ -35,8 +37,9 @@ ReactDOM.render(
             <Route path="/dashboard/bookings" element={<BookingsPage />} />
             <Route path="/dashboard/settings" element={<SettingsPage />} />
             <Route path="hotels" element={<HotelsPage />} />
+            <Route path="hotel-checkout" element={<CheckOutSteps />} />
             <Route path="hotels/:id" element={<HotelDetails />} />
-            <Route path="*" element={<h1>404- Url Not Found</h1>} />
+            <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

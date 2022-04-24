@@ -4,23 +4,19 @@ import {
   createStyles,
   Dialog,
   Grid,
+  Loader,
   NativeSelect,
   SimpleGrid,
-  Skeleton,
   Space,
   Text,
   TextInput,
 } from "@mantine/core";
 import React, { useEffect, useState } from "react";
-import { Country, State } from "country-state-city";
+import { Country } from "country-state-city";
 import countries from "i18n-iso-countries";
 import DashBoard from "../components/layout/DashBoard";
 import { useInputState } from "@mantine/hooks";
-import {
-  useStoreActions,
-  useStoreDispatch,
-  useStoreState,
-} from "../state/store";
+import { useStoreActions, useStoreState } from "../state/store";
 import { useNavigate } from "react-router-dom";
 // import axios from "axios";
 
@@ -34,14 +30,11 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export default function ProfilePage() {
-  const { classes, cx } = useStyles();
+  const { classes } = useStyles();
   // profile state and actions
   const profileInfoState = useStoreState((state) => state.profile.userProfile);
   const profileInfo = useStoreState((state) => state.profile);
   const userInfoState = useStoreState((state) => state.userSession.userInfo);
-  //   const fullName = userInfoState!.fullName;
-  //   const email = userInfoState?.email;
-  const address = profileInfoState.address;
 
   const { isLoading, error } = profileInfo;
 
@@ -52,7 +45,7 @@ export default function ProfilePage() {
   const [countryNames] = useState(
     Country.getAllCountries().map((country) => country.name)
   );
-  const [countryValue, setCountryValue] = useInputState("");
+  const [countryValue, setCountryValue] = useInputState(countryNames[0]);
   const [statesValue, setStatesValue] = useInputState("");
   const [cityValue, setCityValue] = useInputState("");
   const [streetNameValue, setStreetNameValue] = useInputState("");
@@ -68,7 +61,11 @@ export default function ProfilePage() {
     (action) => action.profile.updateProfile
   );
 
-  const updateProfileHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const updateProfileHandler = async (
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    e.preventDefault();
+
     updateProfileAction({
       fullName: fullNameValue,
       email: emailValue,
@@ -88,12 +85,26 @@ export default function ProfilePage() {
   useEffect(() => {
     if (!userInfoState?.token) {
       navigate("/login");
+    } else if (profileInfoState) {
+      getProfileAction();
+      setFullNameValue(profileInfoState.fullName);
+      setEmailValue(profileInfoState.email);
+      if (profileInfoState.address) {
+        setCountryValue(profileInfoState.address.country);
+        setStatesValue(profileInfoState.address.state);
+        setCityValue(profileInfoState.address.city);
+        if (profileInfoState.address.street)
+          setStreetNameValue(profileInfoState.address.street);
+        if (profileInfoState.address.zipCode)
+          setZipCodeValue(profileInfoState.address.zipCode);
+      }
     } else {
       getProfileAction();
       setFullNameValue(userInfoState.fullName);
       setEmailValue(userInfoState.email);
     }
-  }, [navigate, getProfileAction, userInfoState]);
+    //eslint-disable-next-line
+  }, [getProfileAction]);
 
   return (
     <>
@@ -105,9 +116,7 @@ export default function ProfilePage() {
               <Grid.Col span={12}>
                 <Space h="xl" />
                 <Space h="xl" />
-                <Skeleton height={8} radius="xl" py="xl" />
-                <Skeleton height={8} mt={6} radius="xl" />
-                <Skeleton height={8} mt={6} width="70%" radius="xl" />
+                <Loader />
               </Grid.Col>
             ) : (
               <>
@@ -138,7 +147,7 @@ export default function ProfilePage() {
                   <NativeSelect
                     data={countryNames}
                     label="Country"
-                    value={address?.country || countryNames[0]}
+                    value={countryValue}
                     onChange={(event) =>
                       setCountryValue(event.currentTarget.value)
                     }
@@ -164,13 +173,13 @@ export default function ProfilePage() {
                   <Space h="lg" />
                   <TextInput
                     label="Street"
-                    value={address?.street}
+                    value={streetNameValue}
                     onChange={setStreetNameValue}
                   />
                   <Space h="lg" />
                   <TextInput
                     label="Zip Code"
-                    value={address?.zipCode}
+                    value={zipCodeValue}
                     onChange={setZipCodeValue}
                   />
                   <Space h="xl" />
