@@ -83,26 +83,29 @@ export default function ProfilePage() {
   };
 
   useEffect(() => {
-    if (!userInfoState?.token) {
-      navigate("/login");
-    } else if (profileInfoState) {
-      getProfileAction();
-      setFullNameValue(profileInfoState.fullName);
-      setEmailValue(profileInfoState.email);
-      if (profileInfoState.address) {
-        setCountryValue(profileInfoState.address.country);
-        setStatesValue(profileInfoState.address.state);
-        setCityValue(profileInfoState.address.city);
-        if (profileInfoState.address.street)
-          setStreetNameValue(profileInfoState.address.street);
-        if (profileInfoState.address.zipCode)
-          setZipCodeValue(profileInfoState.address.zipCode);
+    async function fetch() {
+      if (!userInfoState?.token) {
+        navigate("/login");
+      } else if (profileInfoState) {
+        await getProfileAction();
+        setFullNameValue(profileInfoState.fullName);
+        setEmailValue(profileInfoState.email);
+        if (profileInfoState.address) {
+          setCountryValue(profileInfoState.address.country);
+          setStatesValue(profileInfoState.address.state);
+          setCityValue(profileInfoState.address.city);
+          if (profileInfoState.address.street)
+            setStreetNameValue(profileInfoState.address.street);
+          if (profileInfoState.address.zipCode)
+            setZipCodeValue(profileInfoState.address.zipCode);
+        }
+      } else {
+        await getProfileAction();
+        setFullNameValue(userInfoState.fullName);
+        setEmailValue(userInfoState.email);
       }
-    } else {
-      getProfileAction();
-      setFullNameValue(userInfoState.fullName);
-      setEmailValue(userInfoState.email);
     }
+    fetch();
     //eslint-disable-next-line
   }, [getProfileAction]);
 

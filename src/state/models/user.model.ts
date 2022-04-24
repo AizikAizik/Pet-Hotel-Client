@@ -67,7 +67,6 @@ export const UserModel: UserSession = {
         "https://peaceful-garden-90498.herokuapp.com/api/users/login",
         payload
       );
-      console.log(data);
       localStorage.setItem("userInfo", JSON.stringify(data));
       localStorage.setItem("token", JSON.stringify(data.token));
 

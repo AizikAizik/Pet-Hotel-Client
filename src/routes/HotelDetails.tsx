@@ -16,7 +16,7 @@ import {
 } from "@mantine/core";
 import axios, { AxiosRequestConfig } from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { ArrowNarrowLeft } from "tabler-icons-react";
 import { Hotel } from "../state/models/hotel.model";
 
@@ -54,6 +54,7 @@ export default function HotelDetails() {
   const theme = useMantineTheme();
   const { classes } = useStyles();
   const [hotel, setHotel] = useState<Hotel>();
+  const navigate = useNavigate();
 
   const fetchHotelById = async (id: string) => {
     try {
@@ -137,7 +138,11 @@ export default function HotelDetails() {
               <Text>rooms available: {hotel.roomsAvailable}</Text>
             </Group>
             {createImageGrid(hotel)}
-            <Button color={"teal"} size={"md"}>
+            <Button
+              color={"teal"}
+              size={"md"}
+              onClick={() => navigate(`/hotel-checkout`)}
+            >
               Book Now
             </Button>
           </Stack>

@@ -34,7 +34,7 @@ export default function HotelCheckOut() {
 
   const [hotels, setHotels] = useState<Hotel[]>([]);
   const [hotelData, setHotelData] = useState<Array<{ value: string }>>([]);
-  const [hotelValue, setHotelValue] = useInputState(hotels[0].name);
+  const [hotelValue, setHotelValue] = useInputState(hotels[0]?.name);
   const [hotelPackageValue, setHotelPackageValue] = useInputState("Gold  $20");
   const [hotelDeliveryValue, setHotelDeliveryValue] = useInputState("Home  $0");
   const [petNameValue, setPetNameValue] = useInputState(pets[0].name);

@@ -212,23 +212,39 @@ export default function DashBoard() {
     </Tooltip>
   ));
 
-  const links = linksMockdata.map((link, idx) => (
-    <Link
-      className={cx(classes.link, {
-        [classes.linkActive]: activeLink === link,
-      })}
-      to={`/dashboard/${link}`}
-      onClick={(event) => {
-        event.preventDefault();
-        setActiveLink(link);
-        setActive(mainLinksMockdata[idx].label);
-        navigate(`/dashboard/${link}`);
-      }}
-      key={link}
-    >
-      {link}
-    </Link>
-  ));
+  const links = linksMockdata.map((link, idx) =>
+    link === "logout" ? (
+      <div
+        className={cx(classes.link, {
+          [classes.linkActive]: activeLink === link,
+        })}
+        onClick={() => {
+          setActiveLink(link);
+          setActive(mainLinksMockdata[idx].label);
+          openDeleteModal();
+        }}
+        key={link}
+      >
+        {link}
+      </div>
+    ) : (
+      <Link
+        className={cx(classes.link, {
+          [classes.linkActive]: activeLink === link,
+        })}
+        to={`/dashboard/${link}`}
+        onClick={(event) => {
+          event.preventDefault();
+          setActiveLink(link);
+          setActive(mainLinksMockdata[idx].label);
+          navigate(`/dashboard/${link}`);
+        }}
+        key={link}
+      >
+        {link}
+      </Link>
+    )
+  );
 
   return (
     <>

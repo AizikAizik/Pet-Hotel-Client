@@ -31,7 +31,7 @@ export default function LoginPage() {
   const userSessionState = useStoreState((state) => state.userSession);
 
   const navigate = useNavigate();
-  const redirect = location.search ? location.search.split("=")[1] : "/";
+  //const redirect = location.search ? location.search.split("=")[1] : "/";
 
   const { isLoading, userInfo, error } = userSessionState;
 
@@ -40,7 +40,7 @@ export default function LoginPage() {
 
   const submitHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
     //await loginAction({ password, email });
-    dispatch(loginAction({ password, email }));
+    await loginAction({ password, email });
   };
 
   // this useEffect checks if the user is already logged in
@@ -56,11 +56,7 @@ export default function LoginPage() {
       <Title align="center">Welcome back!</Title>
       <Text color="dimmed" size="sm" align="center" mt={5}>
         Do not have an account yet?{" "}
-        <Anchor
-          size="sm"
-          component={Link}
-          to={redirect ? `/signup?redirect=${redirect}` : "/signup"}
-        >
+        <Anchor size="sm" component={Link} to={"/signup"}>
           Create account
         </Anchor>
       </Text>

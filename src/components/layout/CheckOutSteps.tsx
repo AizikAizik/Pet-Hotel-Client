@@ -14,7 +14,8 @@ export default function CheckOutSteps() {
   const userInfoState = useStoreState((state) => state.userSession.userInfo);
 
   useEffect(() => {
-    if (!userInfoState) {
+    if (userInfoState === null) {
+      console.log("yes");
       navigate("/login?redirect=hotel-checkout");
     }
   }, []);
@@ -27,7 +28,7 @@ export default function CheckOutSteps() {
         disabled
       ></Tabs.Tab>
       <Tabs.Tab label="Step2" title="select your hotel of choice">
-        <HotelCheckOut />
+        {userInfoState && <HotelCheckOut />}
       </Tabs.Tab>
     </Tabs>
   );
