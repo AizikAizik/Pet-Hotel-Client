@@ -12,8 +12,11 @@ import {
   Space,
 } from "@mantine/core";
 import { useBooleanToggle } from "@mantine/hooks";
+import { State, useStoreState } from "easy-peasy";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { UserInfo } from "../../state/models/user.model";
+import { StoreModel } from "../../state/store";
 import { Logo } from "../shared/Logo";
 
 const HEADER_HEIGHT = 70;
@@ -103,6 +106,9 @@ interface PageHeaderProps {
 }
 
 export default function PageHeader({ links }: PageHeaderProps) {
+  const user = useStoreState(
+    (state: State<StoreModel>) => state.userSession.userInfo
+  );
   const [opened, toggleOpened] = useBooleanToggle(false);
   const [active, setActive] = useState(links[0].link);
   const { classes, cx } = useStyles();
@@ -122,7 +128,16 @@ export default function PageHeader({ links }: PageHeaderProps) {
     </Link>
   ));
 
-  const profileLink = () => {
+  const profileLink = (user: UserInfo) => {
+    // get initials from fullname. can be extracted into a util.js file
+    const getInitials = (fullname: string, glue: boolean) => {
+      var initials = fullname.replace(/[^a-zA-Z- ]/g, "").match(/\b\w/g);
+      if (glue && initials) {
+        return initials.join("");
+      }
+      return initials;
+    };
+
     return (
       <Link
         to="/dashboard/profile"
@@ -130,12 +145,17 @@ export default function PageHeader({ links }: PageHeaderProps) {
       >
         Profile
         <Space mr={"xs"} />
-        <Avatar src={null} alt="Joy Ajiboye" radius="xl">
-          JA
+        <Avatar src={null} alt={user.fullName} radius="xl">
+          {getInitials(user.fullName, true)}
         </Avatar>
       </Link>
     );
   };
+
+  const getProfileLink = () => {
+    return user && user.token ? profileLink(user) : null;
+  };
+
   return (
     <Header
       sx={{ background: "#FFF2BD", border: "none" }}
@@ -146,7 +166,6 @@ export default function PageHeader({ links }: PageHeaderProps) {
         <Logo />
         <Group spacing={5} className={classes.links}>
           {items}
-          {profileLink()}
         </Group>
         <Burger
           opened={opened}
@@ -159,7 +178,6 @@ export default function PageHeader({ links }: PageHeaderProps) {
           {(styles) => (
             <Paper className={classes.dropdown} withBorder style={styles}>
               {items}
-              {profileLink()}
             </Paper>
           )}
         </Transition>
