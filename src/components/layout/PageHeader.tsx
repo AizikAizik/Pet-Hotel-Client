@@ -6,6 +6,10 @@ import {
   Burger,
   Paper,
   Transition,
+  Avatar,
+  Badge,
+  Button,
+  Space,
 } from "@mantine/core";
 import { useBooleanToggle } from "@mantine/hooks";
 import { useState } from "react";
@@ -80,6 +84,12 @@ const useStyles = createStyles((theme) => ({
     },
   },
 
+  profileLink: {
+    display: "flex",
+    alignItems: "center",
+    padding: "0px 6px",
+  },
+
   linkActive: {
     "&, &:hover": {
       backgroundColor: theme.colors.teal[6],
@@ -111,6 +121,21 @@ export default function PageHeader({ links }: PageHeaderProps) {
       {link.label}
     </Link>
   ));
+
+  const profileLink = () => {
+    return (
+      <Link
+        to="/dashboard/profile"
+        className={cx(classes.link, classes.profileLink)}
+      >
+        Profile
+        <Space mr={"xs"} />
+        <Avatar src={null} alt="Joy Ajiboye" radius="xl">
+          JA
+        </Avatar>
+      </Link>
+    );
+  };
   return (
     <Header
       sx={{ background: "#FFF2BD", border: "none" }}
@@ -121,6 +146,7 @@ export default function PageHeader({ links }: PageHeaderProps) {
         <Logo />
         <Group spacing={5} className={classes.links}>
           {items}
+          {profileLink()}
         </Group>
         <Burger
           opened={opened}
@@ -133,6 +159,7 @@ export default function PageHeader({ links }: PageHeaderProps) {
           {(styles) => (
             <Paper className={classes.dropdown} withBorder style={styles}>
               {items}
+              {profileLink()}
             </Paper>
           )}
         </Transition>
