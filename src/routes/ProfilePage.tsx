@@ -61,7 +61,11 @@ export default function ProfilePage() {
     (action) => action.profile.updateProfile
   );
 
-  const updateProfileHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const updateProfileHandler = async (
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    e.preventDefault();
+
     updateProfileAction({
       fullName: fullNameValue,
       email: emailValue,
@@ -79,10 +83,10 @@ export default function ProfilePage() {
   };
 
   useEffect(() => {
-    getProfileAction();
     if (!userInfoState?.token) {
       navigate("/login");
     } else if (profileInfoState) {
+      getProfileAction();
       setFullNameValue(profileInfoState.fullName);
       setEmailValue(profileInfoState.email);
       if (profileInfoState.address) {
@@ -95,11 +99,12 @@ export default function ProfilePage() {
           setZipCodeValue(profileInfoState.address.zipCode);
       }
     } else {
+      getProfileAction();
       setFullNameValue(userInfoState.fullName);
       setEmailValue(userInfoState.email);
     }
     //eslint-disable-next-line
-  }, []);
+  }, [getProfileAction]);
 
   return (
     <>

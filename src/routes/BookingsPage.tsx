@@ -171,7 +171,10 @@ export default function BookingsPage() {
                   </Center>
                 </div>
               ) : (
-                <ScrollArea style={{ width: 600, height: 400 }}>
+                <ScrollArea
+                  style={{ width: 800, height: 400 }}
+                  scrollbarSize={4}
+                >
                   <Table sx={{ minWidth: 800 }} verticalSpacing="sm">
                     <thead>
                       <tr>
@@ -192,7 +195,11 @@ export default function BookingsPage() {
           </Grid>
           <Center>
             <Group position="center" grow>
-              <Button color="teal" mt="xl">
+              <Button
+                color="teal"
+                mt="xl"
+                onClick={() => navigate("/hotel-checkout")}
+              >
                 New Booking
               </Button>
             </Group>

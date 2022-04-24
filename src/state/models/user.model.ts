@@ -115,7 +115,7 @@ export const UserModel: UserSession = {
     state.isLoggedIn = false;
     state.token = null;
     localStorage.removeItem("userInfo");
-    localStorage.removeItem("userInfo");
+    localStorage.removeItem("token");
     localStorage.removeItem("userProfile");
     state.userInfo = null;
   }),

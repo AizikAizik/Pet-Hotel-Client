@@ -39,14 +39,15 @@ export interface BookingSession {
   setBookingInfo: Action<BookingSession, BookingInfo[]>;
   setIsLoading: Action<BookingSession, boolean>;
   setDeleteMessage: Action<BookingSession, any>;
+  addToBookingInfo: Action<BookingSession, BookingInfo>;
   setError: Action<BookingSession, any>;
   addBooking: Thunk<
     BookingSession,
     {
       pet: string;
       hotel: string;
-      hotelPackage: "Gold" | "Silver" | "Diamond";
-      bookingMethod: "PickUp" | "Home";
+      hotelPackage: "Gold" | "Silver" | "Diamond" | string;
+      bookingMethod: "PickUp" | "Home" | string;
       checkInDate: string;
       checkOutDate: string;
     }
@@ -76,6 +77,11 @@ export const BookingModel: BookingSession = {
 
   setError: action((state, payload) => {
     state.error = payload;
+  }),
+
+  addToBookingInfo: action((state, payload) => {
+    //@ts-ignore
+    state.petInfo.push(payload);
   }),
 
   // action creators
@@ -126,7 +132,7 @@ export const BookingModel: BookingSession = {
       );
       console.log(data);
       actions.setIsLoading(false);
-      actions.setBookingInfo(data);
+      actions.addToBookingInfo(data);
       actions.setError(null);
     } catch (error: any) {
       actions.setError(
