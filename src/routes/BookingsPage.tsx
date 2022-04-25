@@ -25,11 +25,14 @@ import {
 import { Pencil, Trash, Eye } from "tabler-icons-react";
 import SingleBooking from "../components/layout/SingleBooking";
 import noBookingImage from "../assets/gifs/nobooking.gif";
+import { FaCcPaypal } from "react-icons/fa";
+import PaymentPage from "./PaymentPage";
 // import axios from "axios";
 
 export default function BookingsPage() {
   const [opened, setOpened] = useState(false);
   const [opened2, setOpened2] = useState(false);
+  const [opened3, setOpened3] = useState(false);
   const [bookingId, setBookingId] = useState("");
   const userInfoState = useStoreState((state) => state.userSession.userInfo);
   const navigate = useNavigate();
@@ -133,12 +136,28 @@ export default function BookingsPage() {
               >
                 Cancel Booking
               </Menu.Item>
+              <Menu.Item
+                icon={<FaCcPaypal size={16} />}
+                color="blue"
+                onClick={() => setOpened3(true)}
+              >
+                Pay for Booking
+              </Menu.Item>
             </Menu>
+            <Modal
+              opened={opened3}
+              onClose={() => setOpened3(false)}
+              title={<Center inline>Payment Portal</Center>}
+              size={500}
+              radius="lg"
+            >
+              <PaymentPage {...item} />
+            </Modal>
           </Group>
         ) : (
           <Group spacing={0} position="right">
             <ActionIcon disabled>
-              <Pencil size={16} />
+              <FaCcPaypal size={16} />
             </ActionIcon>
           </Group>
         )}

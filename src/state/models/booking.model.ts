@@ -1,7 +1,7 @@
 import { action, Action, thunk, Thunk } from "easy-peasy";
 import axios from "axios";
 
-interface BookingInfo {
+export interface BookingInfo {
   _id: string;
   user: string;
   hotel: {
@@ -35,10 +35,12 @@ export interface BookingSession {
   error: any | null;
   isLoading: boolean;
   deleteMessage: any;
+  successMessage: any;
   bookingInfo: Array<BookingInfo> | [];
   setBookingInfo: Action<BookingSession, BookingInfo[]>;
   setIsLoading: Action<BookingSession, boolean>;
   setDeleteMessage: Action<BookingSession, any>;
+  setSuccessMessage: Action<BookingSession, any>;
   addToBookingInfo: Action<BookingSession, BookingInfo>;
   setError: Action<BookingSession, any>;
   addBooking: Thunk<
@@ -52,6 +54,16 @@ export interface BookingSession {
       checkOutDate: string;
     }
   >;
+  makePayment: Thunk<
+    BookingSession,
+    {
+      id: string;
+      bookingId: string;
+      emailAddress: string;
+      status: any;
+      update_time: any;
+    }
+  >;
   deleteBooking: Thunk<BookingSession, { bookingID: string }>;
   fetchBooking: Thunk<BookingSession>;
 }
@@ -61,6 +73,7 @@ export const BookingModel: BookingSession = {
   bookingInfo: [],
   error: null,
   deleteMessage: null,
+  successMessage: null,
 
   // setters
   setBookingInfo: action((state, payload) => {
@@ -69,6 +82,10 @@ export const BookingModel: BookingSession = {
 
   setDeleteMessage: action((state, payload) => {
     state.deleteMessage = payload;
+  }),
+
+  setSuccessMessage: action((state, payload) => {
+    state.successMessage = payload;
   }),
 
   setIsLoading: action((state, payload) => {
@@ -132,6 +149,36 @@ export const BookingModel: BookingSession = {
       console.log(data);
       actions.setIsLoading(false);
       actions.addToBookingInfo(data);
+      actions.setError(null);
+    } catch (error: any) {
+      actions.setError(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+      );
+      actions.setIsLoading(false);
+    }
+  }),
+
+  makePayment: thunk(async (actions, payload) => {
+    try {
+      const token = JSON.parse(localStorage.getItem("token")!);
+      //   console.log(token);
+      actions.setIsLoading(true);
+      const options = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await axios.put(
+        `https://peaceful-garden-90498.herokuapp.com/api/bookings/${payload.bookingId}/pay`,
+        payload,
+        options
+      );
+      console.log(data);
+      actions.setIsLoading(false);
+      actions.setSuccessMessage("Successfully Paid!!");
       actions.setError(null);
     } catch (error: any) {
       actions.setError(
