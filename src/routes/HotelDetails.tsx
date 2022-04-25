@@ -18,6 +18,7 @@ import axios, { AxiosRequestConfig } from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { ArrowNarrowLeft } from "tabler-icons-react";
+import CommentCard from "../components/cards/CommentCard";
 import { Hotel } from "../state/models/hotel.model";
 
 // interface HotelDetailsProps {}
@@ -184,39 +185,12 @@ export default function HotelDetails() {
                   Comments
                 </Text>
                 {hotel.comments && hotel.comments.length !== 0 ? (
-                  hotel.comments.map((comment, idx) => {
-                    return (
-                      <Paper
-                        withBorder
-                        radius="md"
-                        key={idx}
-                        sx={(theme) => ({
-                          width: "min(280px,100%)",
-                          padding: `${theme.spacing.lg}px ${theme.spacing.xl}px`,
-                        })}
-                      >
-                        <Group>
-                          <Text size="sm">{comment.user?.fullName}</Text>
-                          <Text size="xs" color="dimmed">
-                            rating:{comment.rating}
-                          </Text>
-                        </Group>
-                        <Text
-                          sx={(theme) => ({
-                            paddingTop: theme.spacing.sm,
-                          })}
-                          size="sm"
-                        >
-                          {comment.comment}
-                        </Text>
-                      </Paper>
-                    );
-                  })
+                  hotel.comments.map((comment, idx) => (
+                    <CommentCard key={idx} {...comment} />
+                  ))
                 ) : (
                   <Text
-                    sx={(theme) => ({
-                      paddingTop: theme.spacing.xl,
-                    })}
+                    sx={{ paddingTop: theme.spacing.xl }}
                     size="sm"
                     color="dimmed"
                   >
