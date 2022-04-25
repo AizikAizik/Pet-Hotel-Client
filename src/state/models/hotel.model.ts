@@ -7,7 +7,7 @@ interface HotelPackage {
   description: string;
 }
 
-interface HotelComment {
+export interface HotelComment {
   comment: string;
   rating: number;
   user?: {
