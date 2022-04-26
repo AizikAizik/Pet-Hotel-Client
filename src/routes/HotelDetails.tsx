@@ -22,6 +22,7 @@ import { ArrowNarrowLeft } from "tabler-icons-react";
 import CommentCard from "../components/cards/CommentCard";
 import CommentInput from "../components/CommentInput";
 import { Hotel } from "../state/models/hotel.model";
+import DisplayRating from "../components/shared/DisplayRating";
 
 // interface HotelDetailsProps {}
 const useStyles = createStyles((theme) => ({
@@ -140,7 +141,12 @@ export default function HotelDetails() {
             </Text>
             <Text>{`${hotel.address.city}, ${hotel.address.state} - ${hotel.address.country}`}</Text>
             <Group>
-              <Text>rating: {hotel.ratings}</Text>
+              <Text>
+                <Text style={{ color: theme.colors.yellow[6] }}>
+                  {hotel.ratings}
+                </Text>
+                {hotel.ratings && <DisplayRating value={hotel.ratings} />}
+              </Text>
               <Text>rooms available: {hotel.roomsAvailable}</Text>
             </Group>
             {createImageGrid(hotel)}
