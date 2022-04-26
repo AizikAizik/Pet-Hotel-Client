@@ -7,10 +7,11 @@ import {
 } from "@mantine/core";
 import { Rating } from "react-simple-star-rating";
 import { useForm } from "@mantine/form";
-import React, { useState } from "react";
+import { useState } from "react";
 import axios, { AxiosRequestConfig } from "axios";
 import { showNotification } from "@mantine/notifications";
 import { Check, X } from "tabler-icons-react";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = createStyles((theme) => ({
   form: {},
@@ -40,6 +41,7 @@ interface CommentInputProps {
 export default function CommentInput(props: CommentInputProps) {
   const { classes } = useStyles();
   const [rating, setRating] = useState(0);
+  const navigate = useNavigate();
   const form = useForm({
     initialValues: {
       comment: "",
@@ -47,8 +49,8 @@ export default function CommentInput(props: CommentInputProps) {
   });
   type FormValues = typeof form.values;
   const handleRating = (rate: number) => {
-    console.log((rate * 5) / 100);
-    setRating((rate * 5) / 100);
+    // rate returns percent value, multiply by 0.05 to get int value
+    setRating(rate * 0.05);
   };
 
   const handleSubmit = async (values: FormValues) => {
@@ -72,6 +74,7 @@ export default function CommentInput(props: CommentInputProps) {
         title: "Comment sent!",
         message: data.message,
       });
+      // navigate(`../hotels/${props.id}`);
     } catch (error: any) {
       form.reset();
       setRating(0);
@@ -89,7 +92,12 @@ export default function CommentInput(props: CommentInputProps) {
   return (
     <form className={classes.form} onSubmit={form.onSubmit(handleSubmit)}>
       <InputWrapper required label="Rating" description="rate this hotel">
-        <Rating size={22} onClick={handleRating} ratingValue={rating} />
+        <Rating
+          size={22}
+          onClick={handleRating}
+          ratingValue={rating}
+          allowHalfIcon
+        />
       </InputWrapper>
       <Textarea
         required
