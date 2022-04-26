@@ -21,7 +21,7 @@ const HEADER_HEIGHT = 70;
 const useStyles = createStyles((theme) => ({
   root: {
     position: "relative",
-    zIndex: 99,
+    zIndex: 120,
   },
 
   dropdown: {
@@ -29,7 +29,7 @@ const useStyles = createStyles((theme) => ({
     top: HEADER_HEIGHT,
     left: 0,
     right: 0,
-    zIndex: 0,
+    zIndex: 120,
     borderTopRightRadius: 0,
     borderTopLeftRadius: 0,
     borderTopWidth: 0,
@@ -43,7 +43,9 @@ const useStyles = createStyles((theme) => ({
   header: {
     display: "flex",
     justifyContent: "space-between",
+    position: "relative",
     alignItems: "center",
+    zIndex: 120,
     height: "100%",
   },
 
