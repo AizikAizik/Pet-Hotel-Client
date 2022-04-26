@@ -12,10 +12,11 @@ import {
   useMantineTheme,
   createStyles,
   Card,
-  Paper,
 } from "@mantine/core";
 import axios, { AxiosRequestConfig } from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useStoreState, State } from "easy-peasy";
+import { StoreModel } from "../state/store";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { ArrowNarrowLeft } from "tabler-icons-react";
 import CommentCard from "../components/cards/CommentCard";
@@ -55,6 +56,9 @@ export default function HotelDetails() {
   let params = useParams();
   const theme = useMantineTheme();
   const { classes } = useStyles();
+  const isLoggedIn = useStoreState(
+    (state: State<StoreModel>) => state.userSession.userInfo
+  );
   const [hotel, setHotel] = useState<Hotel>();
   const navigate = useNavigate();
 
@@ -181,8 +185,8 @@ export default function HotelDetails() {
               </Group>
             </Grid.Col>
             <Grid.Col span={6}>
-              <Stack>
-                <CommentInput id={hotel._id} />
+              <Stack mb={"xl"}>
+                {isLoggedIn && <CommentInput id={hotel._id} />}
               </Stack>
               <Stack align="flex-end" justify="flex-start" spacing="xs">
                 <Text color="dimmed" size={"lg"} mb={"xl"}>
