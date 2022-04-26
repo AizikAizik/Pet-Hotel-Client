@@ -41,7 +41,6 @@ interface CommentInputProps {
 export default function CommentInput(props: CommentInputProps) {
   const { classes } = useStyles();
   const [rating, setRating] = useState(0);
-  const [ready, toggleReady] = useBooleanToggle(false);
   const form = useForm({
     initialValues: {
       comment: "",
@@ -49,14 +48,11 @@ export default function CommentInput(props: CommentInputProps) {
   });
   type FormValues = typeof form.values;
   const handleRating = (rate: number) => {
-    setRating(rate);
+    console.log((rate * 5) / 100);
+    setRating((rate * 5) / 100);
   };
 
   const handleSubmit = async (values: FormValues) => {
-    toggleReady();
-    let payload = new FormData();
-    payload.append("comment", values.comment);
-    payload.append("rating", `${rating}`);
     const token = JSON.parse(localStorage.getItem("token")!);
     try {
       let config: AxiosRequestConfig<any> = {
@@ -66,7 +62,7 @@ export default function CommentInput(props: CommentInputProps) {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        data: payload,
+        data: JSON.stringify({ comment: values.comment, rating: rating }),
       };
       const { data } = await axios(config);
       form.reset();
@@ -94,12 +90,7 @@ export default function CommentInput(props: CommentInputProps) {
   return (
     <form className={classes.form} onSubmit={form.onSubmit(handleSubmit)}>
       <InputWrapper required label="Rating" description="rate this hotel">
-        <Rating
-          size={22}
-          readonly={ready}
-          onClick={handleRating}
-          ratingValue={rating}
-        />
+        <Rating size={22} onClick={handleRating} ratingValue={rating} />
       </InputWrapper>
       <Textarea
         required
@@ -112,7 +103,7 @@ export default function CommentInput(props: CommentInputProps) {
       />
       <Group position="right" mt="md">
         <Button type="submit" className={classes.control}>
-          Send message
+          Make Comment
         </Button>
       </Group>
     </form>
