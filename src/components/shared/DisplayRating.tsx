@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Rating } from "react-simple-star-rating";
 interface DisplayRatingProps {
   value: number;
@@ -7,10 +7,11 @@ interface DisplayRatingProps {
 export default function DisplayRating(props: DisplayRatingProps) {
   return (
     <Rating
-      initialValue={0}
       size={props.size ? props.size : 22}
-      readonly={true}
-      ratingValue={props.value}
+      readonly
+      initialValue={props.value}
+      ratingValue={0}
+      allowHalfIcon
     />
   );
 }
