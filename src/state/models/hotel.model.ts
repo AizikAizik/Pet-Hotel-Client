@@ -7,7 +7,7 @@ interface HotelPackage {
   description: string;
 }
 
-interface HotelComment {
+export interface HotelComment {
   comment: string;
   rating: number;
   user?: {
@@ -44,10 +44,6 @@ export interface HotelsSession {
   hotels: Hotel[];
   add: Action<HotelsSession, Hotel>;
   addAll: Action<HotelsSession, Hotel[]>;
-  addComment: Thunk<
-    HotelsSession,
-    { id: string; comment: string; rating: number }
-  >;
   fetchAll: Thunk<HotelsSession>;
 }
 
@@ -59,7 +55,6 @@ export const HotelsModel: HotelsSession = {
   addAll: action((state, payload) => {
     state.hotels = payload;
   }),
-  addComment: thunk((state, payload) => {}),
   fetchAll: thunk(async (state) => {
     try {
       let config: AxiosRequestConfig<any> = {

@@ -12,13 +12,17 @@ import {
   useMantineTheme,
   createStyles,
   Card,
-  Paper,
 } from "@mantine/core";
 import axios, { AxiosRequestConfig } from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useStoreState, State } from "easy-peasy";
+import { StoreModel } from "../state/store";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { ArrowNarrowLeft } from "tabler-icons-react";
+import CommentCard from "../components/cards/CommentCard";
+import CommentInput from "../components/CommentInput";
 import { Hotel } from "../state/models/hotel.model";
+import DisplayRating from "../components/shared/DisplayRating";
 
 // interface HotelDetailsProps {}
 const useStyles = createStyles((theme) => ({
@@ -53,6 +57,9 @@ export default function HotelDetails() {
   let params = useParams();
   const theme = useMantineTheme();
   const { classes } = useStyles();
+  const isLoggedIn = useStoreState(
+    (state: State<StoreModel>) => state.userSession.userInfo
+  );
   const [hotel, setHotel] = useState<Hotel>();
   const navigate = useNavigate();
 
@@ -134,7 +141,12 @@ export default function HotelDetails() {
             </Text>
             <Text>{`${hotel.address.city}, ${hotel.address.state} - ${hotel.address.country}`}</Text>
             <Group>
-              <Text>rating: {hotel.ratings}</Text>
+              <Text>
+                <Text style={{ color: theme.colors.yellow[6] }}>
+                  {hotel.ratings}
+                </Text>
+                {hotel.ratings && <DisplayRating value={hotel.ratings} />}
+              </Text>
               <Text>rooms available: {hotel.roomsAvailable}</Text>
             </Group>
             {createImageGrid(hotel)}
@@ -179,44 +191,20 @@ export default function HotelDetails() {
               </Group>
             </Grid.Col>
             <Grid.Col span={6}>
+              <Stack mb={"xl"}>
+                {isLoggedIn && <CommentInput id={hotel._id} />}
+              </Stack>
               <Stack align="flex-end" justify="flex-start" spacing="xs">
                 <Text color="dimmed" size={"lg"} mb={"xl"}>
                   Comments
                 </Text>
                 {hotel.comments && hotel.comments.length !== 0 ? (
-                  hotel.comments.map((comment, idx) => {
-                    return (
-                      <Paper
-                        withBorder
-                        radius="md"
-                        key={idx}
-                        sx={(theme) => ({
-                          width: "min(280px,100%)",
-                          padding: `${theme.spacing.lg}px ${theme.spacing.xl}px`,
-                        })}
-                      >
-                        <Group>
-                          <Text size="sm">{comment.user?.fullName}</Text>
-                          <Text size="xs" color="dimmed">
-                            rating:{comment.rating}
-                          </Text>
-                        </Group>
-                        <Text
-                          sx={(theme) => ({
-                            paddingTop: theme.spacing.sm,
-                          })}
-                          size="sm"
-                        >
-                          {comment.comment}
-                        </Text>
-                      </Paper>
-                    );
-                  })
+                  hotel.comments.map((comment, idx) => (
+                    <CommentCard key={idx} {...comment} />
+                  ))
                 ) : (
                   <Text
-                    sx={(theme) => ({
-                      paddingTop: theme.spacing.xl,
-                    })}
+                    sx={{ paddingTop: theme.spacing.xl }}
                     size="sm"
                     color="dimmed"
                   >
