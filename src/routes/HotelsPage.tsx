@@ -30,7 +30,7 @@ export default function HotelsPage() {
         </Grid>
       ) : (
         <Center>
-          <Title order={1}>No Hotels Available</Title>
+          <Title order={1}>Loading...</Title>
         </Center>
       )}
     </Container>
