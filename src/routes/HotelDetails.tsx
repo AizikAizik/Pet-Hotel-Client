@@ -19,6 +19,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { ArrowNarrowLeft } from "tabler-icons-react";
 import CommentCard from "../components/cards/CommentCard";
+import CommentInput from "../components/CommentInput";
 import { Hotel } from "../state/models/hotel.model";
 
 // interface HotelDetailsProps {}
@@ -197,6 +198,9 @@ export default function HotelDetails() {
                     No Comments Available
                   </Text>
                 )}
+              </Stack>
+              <Stack>
+                <CommentInput id={hotel._id} />
               </Stack>
             </Grid.Col>
           </Grid>
