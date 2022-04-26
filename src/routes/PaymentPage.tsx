@@ -2,12 +2,9 @@ import React, { useEffect, useState } from "react";
 import { createStyles, Text, Card, Group, Loader } from "@mantine/core";
 import { BookingInfo } from "../state/models/booking.model";
 import { PayPalButton } from "react-paypal-button-v2";
-import {
-  useStoreActions,
-  useStoreDispatch,
-  useStoreState,
-} from "../state/store";
+import { useStoreActions, useStoreState } from "../state/store";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -69,6 +66,8 @@ export default function PaymentPage({
     (action) => action.booking.fetchBooking
   );
 
+  const navigate = useNavigate();
+
   const setMessageAction = useStoreActions(
     (action) => action.booking.setSuccessMessage
   );
@@ -76,7 +75,7 @@ export default function PaymentPage({
   //const dispatch = useStoreDispatch();
 
   const successPaymentHandler = (paymentResult: any) => {
-    setMessageAction("success payment");
+    setMessageAction(paymentResult);
   };
 
   useEffect(() => {
@@ -98,15 +97,18 @@ export default function PaymentPage({
     addPayPalScript();
   }, []);
 
-  //   useEffect(() => {
-  //       makePaymentAction({
-  //         id: paymentResult.id,
-  //         emailAddress: paymentResult.payer_id.email_address,
-  //         update_time: paymentResult.update_time,
-  //         status: paymentResult.status,
-  //         bookingId: _id,
-  //       });
-  //   })
+  if (successMessage) {
+    makePaymentAction({
+      id: successMessage.id,
+      email_address: successMessage.payer.email_address,
+      bookingId: _id,
+      updateTime: successMessage.payer.update_time,
+      status: successMessage.status,
+    });
+    navigate("/dashboard/bookings");
+    fetchBookingAction();
+    setMessageAction(null);
+  }
 
   return (
     <Card withBorder p="xl" radius="md" className={classes.card}>

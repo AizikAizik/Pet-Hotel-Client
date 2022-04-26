@@ -22,7 +22,7 @@ import {
   Text,
   Tooltip,
 } from "@mantine/core";
-import { Pencil, Trash, Eye } from "tabler-icons-react";
+import { Trash, Eye } from "tabler-icons-react";
 import SingleBooking from "../components/layout/SingleBooking";
 import noBookingImage from "../assets/gifs/nobooking.gif";
 import { FaCcPaypal } from "react-icons/fa";
@@ -55,11 +55,14 @@ export default function BookingsPage() {
   };
 
   useEffect(() => {
-    if (!userInfoState) {
-      navigate("/login");
-    } else {
-      fetchBookingAction();
-    }
+    const fetchBooking = async () => {
+      if (!userInfoState) {
+        navigate("/login");
+      } else {
+        await fetchBookingAction();
+      }
+    };
+    fetchBooking();
   }, [navigate, userInfoState, fetchBookingAction]);
 
   const rows = bookingInfo.map((item) => (
@@ -156,8 +159,22 @@ export default function BookingsPage() {
           </Group>
         ) : (
           <Group spacing={0} position="right">
-            <ActionIcon disabled>
-              <FaCcPaypal size={16} />
+            <ActionIcon>
+              <Tooltip
+                withArrow
+                transition="fade"
+                label="View more booking info..."
+                wrapLines
+                transitionDuration={200}
+              >
+                <Eye
+                  size={16}
+                  onClick={() => {
+                    setOpened(true);
+                    setBookingId(item._id);
+                  }}
+                />
+              </Tooltip>
             </ActionIcon>
           </Group>
         )}

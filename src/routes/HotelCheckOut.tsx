@@ -82,7 +82,6 @@ export default function HotelCheckOut() {
       //const paymentMethod = paymentMethodValue;
       const checkInDate = value[0];
       const checkOutDate = value[1];
-      console.log(hotelDelivery);
 
       addBookingAction({
         pet: petID!._id,
@@ -144,7 +143,7 @@ export default function HotelCheckOut() {
             />
 
             <NativeSelect
-              data={["Home  $0", "Pick Up  $5"]}
+              data={["Home  $0", "PickUp  $5"]}
               value={hotelDeliveryValue}
               onChange={setHotelDeliveryValue}
               label="Choose Delivery Method"

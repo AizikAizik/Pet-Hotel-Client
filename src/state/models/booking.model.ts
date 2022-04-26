@@ -59,9 +59,9 @@ export interface BookingSession {
     {
       id: string;
       bookingId: string;
-      emailAddress: string;
+      email_address: string;
       status: any;
-      update_time: any;
+      updateTime: any;
     }
   >;
   deleteBooking: Thunk<BookingSession, { bookingID: string }>;
@@ -146,7 +146,7 @@ export const BookingModel: BookingSession = {
         payload,
         options
       );
-      console.log(data);
+
       actions.setIsLoading(false);
       actions.addToBookingInfo(data);
       actions.setError(null);
@@ -178,7 +178,7 @@ export const BookingModel: BookingSession = {
       );
       console.log(data);
       actions.setIsLoading(false);
-      actions.setSuccessMessage("Successfully Paid!!");
+      //actions.setSuccessMessage("Successfully Paid!!");
       actions.setError(null);
     } catch (error: any) {
       actions.setError(
