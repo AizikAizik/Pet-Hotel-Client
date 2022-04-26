@@ -114,7 +114,7 @@ export const BookingModel: BookingSession = {
         },
       };
       const { data } = await axios.get(
-        "https://peaceful-garden-90498.herokuapp.com/api/bookings",
+        `https://peaceful-garden-90498.herokuapp.com/api/bookings`,
         options
       );
       actions.setIsLoading(false);
