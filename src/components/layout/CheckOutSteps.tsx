@@ -18,6 +18,7 @@ export default function CheckOutSteps() {
       console.log("yes");
       navigate("/login?redirect=hotel-checkout");
     }
+    //eslint-disable-next-line
   }, []);
 
   return (

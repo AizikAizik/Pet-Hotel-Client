@@ -1,8 +1,8 @@
-interface LogoProps {
-  width?: number;
-  height?: number;
-  fill?: string;
-}
+// interface LogoProps {
+//   width?: number;
+//   height?: number;
+//   fill?: string;
+// }
 
 export function Logo() {
   return (

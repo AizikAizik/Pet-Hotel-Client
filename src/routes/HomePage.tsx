@@ -5,7 +5,6 @@ import {
   Text,
   Group,
   Image,
-  Box,
 } from "@mantine/core";
 import PricingCard from "../components/cards/PricingCard";
 import TestimonialCard from "../components/cards/TestimonialCard";

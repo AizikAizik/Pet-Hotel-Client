@@ -36,7 +36,7 @@ export default function ProfilePage() {
   const profileInfo = useStoreState((state) => state.profile);
   const userInfoState = useStoreState((state) => state.userSession.userInfo);
 
-  const { isLoading, error } = profileInfo;
+  const { isLoading } = profileInfo;
 
   // profiles data state
   const [fullNameValue, setFullNameValue] = useInputState("");

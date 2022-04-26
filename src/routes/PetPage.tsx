@@ -23,7 +23,7 @@ import nopets5 from "../assets/gifs/nopets5.png";
 export default function PetPage() {
   const userPetState = useStoreState((state) => state.pet);
   const userInfoState = useStoreState((state) => state.userSession.userInfo);
-  const { petInfo, isLoading, error } = userPetState;
+  const { petInfo, isLoading } = userPetState;
   const navigate = useNavigate();
   const [opened, setOpened] = useState(false);
 

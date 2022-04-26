@@ -8,7 +8,6 @@ import {
 import { Rating } from "react-simple-star-rating";
 import { useForm } from "@mantine/form";
 import React, { useState } from "react";
-import { useBooleanToggle } from "@mantine/hooks";
 import axios, { AxiosRequestConfig } from "axios";
 import { showNotification } from "@mantine/notifications";
 import { Check, X } from "tabler-icons-react";

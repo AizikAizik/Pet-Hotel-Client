@@ -3,7 +3,6 @@ import {
   Image,
   Divider,
   Title,
-  Box,
   Text,
   createStyles,
 } from "@mantine/core";
