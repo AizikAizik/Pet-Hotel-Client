@@ -9,7 +9,7 @@ import { BrandTwitter, BrandYoutube, BrandInstagram } from "tabler-icons-react";
 import React from "react";
 import { Logo } from "../shared/Logo";
 
-interface PageFooterProps {}
+// interface PageFooterProps {}
 const useStyles = createStyles((theme) => ({
   footer: {
     color: theme.white,
@@ -66,7 +66,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export default function PageFooter({}: PageFooterProps) {
+export default function PageFooter() {
   const { classes } = useStyles();
   return (
     <footer className={classes.footer}>

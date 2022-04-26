@@ -15,18 +15,13 @@ import {
   Space,
 } from "@mantine/core";
 import { X } from "tabler-icons-react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useInputState } from "@mantine/hooks";
-import {
-  useStoreActions,
-  useStoreDispatch,
-  useStoreState,
-} from "../state/store";
+import { useStoreActions, useStoreState } from "../state/store";
 
 export default function LoginPage() {
   const [email, setEmail] = useInputState("");
   const [password, setPassword] = useInputState("");
-  const location = useLocation();
 
   const userSessionState = useStoreState((state) => state.userSession);
 
@@ -36,10 +31,8 @@ export default function LoginPage() {
   const { isLoading, userInfo, error } = userSessionState;
 
   const loginAction = useStoreActions((action) => action.userSession.login);
-  const dispatch = useStoreDispatch();
 
   const submitHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    //await loginAction({ password, email });
     await loginAction({ password, email });
   };
 

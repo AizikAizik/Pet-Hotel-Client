@@ -170,7 +170,7 @@ export const petModel: PetSession = {
           Authorization: `Bearer ${token}`,
         },
       };
-      const { data } = await axios.delete(
+      await axios.delete(
         `https://peaceful-garden-90498.herokuapp.com/api/pets/${payload.petID}`,
         options
       );
