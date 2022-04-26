@@ -181,6 +181,9 @@ export default function HotelDetails() {
               </Group>
             </Grid.Col>
             <Grid.Col span={6}>
+              <Stack>
+                <CommentInput id={hotel._id} />
+              </Stack>
               <Stack align="flex-end" justify="flex-start" spacing="xs">
                 <Text color="dimmed" size={"lg"} mb={"xl"}>
                   Comments
@@ -198,9 +201,6 @@ export default function HotelDetails() {
                     No Comments Available
                   </Text>
                 )}
-              </Stack>
-              <Stack>
-                <CommentInput id={hotel._id} />
               </Stack>
             </Grid.Col>
           </Grid>
