@@ -160,7 +160,7 @@ export default function HotelDetails() {
           </Stack>
           <Space my={50} />
           <Grid>
-            <Grid.Col span={6}>
+            <Grid.Col sm={12} lg={6}>
               <Text color="dimmed" size={"lg"} mb={"xl"}>
                 Packages
               </Text>
@@ -190,7 +190,7 @@ export default function HotelDetails() {
                 })}
               </Group>
             </Grid.Col>
-            <Grid.Col span={6}>
+            <Grid.Col sm={12} lg={6}>
               <Stack mb={"xl"}>
                 {isLoggedIn && <CommentInput id={hotel._id} />}
               </Stack>
